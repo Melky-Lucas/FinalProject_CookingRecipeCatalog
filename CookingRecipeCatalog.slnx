@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="CookingRecipeCatalog.csproj" />
+  <Project Path="Core/Core.csproj" Id="02389920-30a7-42aa-a22b-15828e5fd1c8" />
+  <Project Path="Data/Data.csproj" Id="fc11989a-d351-47f7-a519-6ecbf340e6c8" />
+  <Project Path="CookingRecipeCatalog/CookingRecipeCatalog.csproj" />
 </Solution>
