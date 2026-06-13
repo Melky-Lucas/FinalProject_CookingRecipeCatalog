@@ -12,7 +12,7 @@ namespace Core.Services
             _categoryRepository = categoryRepository;
         }
 
-        public List<Category> GetAllcategorys()
+        public List<Category> GetAllCategories()
         {
             return _categoryRepository.GetAll();
         }

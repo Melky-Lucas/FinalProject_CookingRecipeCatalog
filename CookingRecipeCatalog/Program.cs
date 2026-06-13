@@ -11,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<IRecipeRepository, InMemory_RecipeRepository>();
 builder.Services.AddSingleton<RecipeService>();
 
+builder.Services.AddSingleton<ICategoryRepository, InMemory_CategoryRepository>();
+builder.Services.AddSingleton<CategoryService>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
