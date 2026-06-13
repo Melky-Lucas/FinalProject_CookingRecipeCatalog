@@ -1,5 +1,5 @@
-﻿using Core;
-using Core.Model;
+﻿using Core.Models;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookingRecipeCatalog.Controllers

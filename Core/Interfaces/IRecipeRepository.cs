@@ -1,5 +1,4 @@
-﻿using Core.Model;
-
+﻿using Core.Models;
 
 namespace Core.Interfaces
 {
