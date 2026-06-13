@@ -1,7 +1,7 @@
 ﻿using Core.Interfaces;
-using Core.Model;
+using Core.Models;
 
-namespace Core
+namespace Core.Services
 {
     public class RecipeService
     {

@@ -1,4 +1,5 @@
 using Core.Interfaces;
+using Core.Services;
 using Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<IRecipeRepository, InMemory_RecipeRepository>();
-builder.Services.AddSingleton<Core.RecipeService>();
+builder.Services.AddSingleton<RecipeService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
