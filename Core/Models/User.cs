@@ -8,7 +8,7 @@ namespace Core.Models
     {
         public int Id { get; set; }
         public string Username { get; set; } = null!;
-        public string Email { get; set; } = null!;
+        public required string Email { get; set; }
         public required int PasswordId { get; set; }
 
         // Navigation properties

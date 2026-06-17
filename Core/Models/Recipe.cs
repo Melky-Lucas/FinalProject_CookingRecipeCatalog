@@ -5,8 +5,8 @@ namespace Core.Models
     public class Recipe
     {
         public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public required string Title { get; set; }
+        public required string Description { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
         public TimeSpan PreparationTime { get; set; }
         public TimeSpan CookingTime { get; set; }
