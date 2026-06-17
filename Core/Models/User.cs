@@ -14,6 +14,6 @@ namespace Core.Models
         // Navigation properties
         public Password Password { get; set; } = null!;
         public ICollection<Recipe> Recipes { get; set; } = [];
-        public ICollection<Tips> Tips { get; set; } = [];
+        public ICollection<Tip> Tips { get; set; } = [];
     }
 }

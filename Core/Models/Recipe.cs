@@ -20,7 +20,7 @@ namespace Core.Models
         public ICollection<Recipe_Ingredient> Recipe_Ingredients { get; set; } = [];
         public ICollection<Recipe_Category> Recipe_Categories { get; set; } = [];
         public ICollection<CookingStep> CookingSteps { get; set; } = [];
-        public ICollection<Tips> Tips { get; set; } = [];
+        public ICollection<Tip> Tips { get; set; } = [];
         public User User { get; set; } = null!;
     }
 }
