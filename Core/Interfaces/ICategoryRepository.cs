@@ -4,10 +4,10 @@ namespace Core.Interfaces
 {
     public interface ICategoryRepository
     {
-        public List<Category> GetAll();
-        public Category GetById(int id);
-        public void Add(Category category);
-        public void Update(Category category);
+        public List<RecipeCategory> GetAll();
+        public RecipeCategory GetById(int id);
+        public void Add(RecipeCategory category);
+        public void Update(RecipeCategory category);
         public void Delete(int id);
     }
 }

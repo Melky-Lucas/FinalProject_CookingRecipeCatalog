@@ -16,13 +16,13 @@ namespace CookingRecipeCatalog.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Category>> Get()
+        public ActionResult<List<RecipeCategory>> Get()
         {
             return _categoryService.GetAllCategories();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Category> Get(int id)
+        public ActionResult<RecipeCategory> Get(int id)
         {
             try
             {
@@ -35,14 +35,14 @@ namespace CookingRecipeCatalog.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(Category category)
+        public ActionResult Post(RecipeCategory category)
         {
             _categoryService.Addcategory(category);
             return CreatedAtAction(nameof(Get), new { id = category.Id }, category);
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, Category category)
+        public ActionResult Put(int id, RecipeCategory category)
         {
             if (id != category.Id)
             {
