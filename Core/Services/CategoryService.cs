@@ -12,22 +12,22 @@ namespace Core.Services
             _categoryRepository = categoryRepository;
         }
 
-        public List<Category> GetAllCategories()
+        public List<RecipeCategory> GetAllCategories()
         {
             return _categoryRepository.GetAll();
         }
 
-        public Category GetCategoryById(int id)
+        public RecipeCategory GetCategoryById(int id)
         {
             return _categoryRepository.GetById(id);
         }
 
-        public void Addcategory(Category category)
+        public void Addcategory(RecipeCategory category)
         {
             _categoryRepository.Add(category);
         }
 
-        public void UpdateCategory(Category category)
+        public void UpdateCategory(RecipeCategory category)
         {
             _categoryRepository.Update(category);
         }

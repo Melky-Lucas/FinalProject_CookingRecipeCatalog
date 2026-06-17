@@ -8,29 +8,29 @@ namespace Data
 {
     public class InMemory_CategoryRepository : ICategoryRepository
     {
-        private readonly List<Category> _categories = [];
+        private readonly List<RecipeCategory> _categories = [];
 
         public InMemory_CategoryRepository()
         {
-            _categories.Add(new Category { Id = 1, Name = "Breakfast", Description = "Good meals to start the day" });
-            _categories.Add(new Category { Id = 2, Name = "Lunch", Description = "Main meal of the day, good to recover energy"});
+            _categories.Add(new RecipeCategory { Id = 1, Name = "Breakfast", Description = "Good meals to start the day" });
+            _categories.Add(new RecipeCategory { Id = 2, Name = "Lunch", Description = "Main meal of the day, good to recover energy"});
         }
-        public List<Category> GetAll()
+        public List<RecipeCategory> GetAll()
         {
             return _categories;
         }
 
-        public Category GetById(int id)
+        public RecipeCategory GetById(int id)
         {
             return _categories.Find(c => c.Id == id) ?? throw new InvalidOperationException($"The category with this ID({id}) doesn't exist");
         }
 
-        public void Add(Category category)
+        public void Add(RecipeCategory category)
         {
             category.Id = _categories.Count + 1;
             _categories.Add(category);
         }
-        public void Update(Category category)
+        public void Update(RecipeCategory category)
         {
             var existingCategory = GetById(category.Id);
             existingCategory.Name = category.Name;
