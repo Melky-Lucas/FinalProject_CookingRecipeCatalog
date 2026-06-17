@@ -6,9 +6,10 @@ namespace Core.Models
 {
     public class Recipe_Category
     {
-        public int Id { get; set; }
         public int CategoryId { get; set; }
         public int RecipeId { get; set; }
+
+        // Navigation properties
         public RecipeCategory Category { get; set; } = null!;
         public Recipe Recipe { get; set; } = null!;
     }

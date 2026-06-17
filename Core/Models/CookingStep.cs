@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Models
+﻿namespace Core.Models
 {
     public class CookingStep
     {
@@ -12,6 +8,8 @@ namespace Core.Models
         public string Title { get; set; } = null!;
         public TimeSpan EstimatedDuration { get; set; }
         public string Description { get; set; } = null!;
+
+        // Navigation property
         public Recipe Recipe { get; set; } = null!;
     }
 }

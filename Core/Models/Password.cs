@@ -7,8 +7,11 @@ namespace Core.Models
     public class Password
     {
         public int Id { get; set; }
-        public required string PasswordHash { get; set; }
-        public required string Salt { get; set; }
+        public string PasswordHash { get; set; } = null!;
+        public string Salt { get; set; } = null!;
+        public DateTime UpdatedAt { get; set; }
+
+        // Navigation property
         public User User { get; set; } = null!;
     }
 }
