@@ -7,10 +7,10 @@ namespace Core.Models
     public class Recipe_Ingredient
     {
         public int Id { get; set; }
-        public int RecipeId { get; set; }
-        public int IngredientId { get; set; }
+        public required int RecipeId { get; set; }
+        public required int IngredientId { get; set; }
         public int Quantity { get; set; }
-        public int UnitId { get; set; }
+        public required int UnitId { get; set; }
         public bool IsOptional { get; set; }
 
         // Navigation properties

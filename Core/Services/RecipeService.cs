@@ -12,29 +12,34 @@ namespace Core.Services
             _recipeRepository = recipeRepository;
         }
 
-        public List<Recipe> GetAllRecipes()
+        public async Task<IEnumerable<Recipe>> GetAllRecipes()
         {
-            return _recipeRepository.GetAll();
+            return await _recipeRepository.GetAllAsync();
         }
 
-        public Recipe GetRecipeById(int id)
+        public async Task<Recipe> GetRecipeById(int id)
         {
-            return _recipeRepository.GetById(id);
+            var recipe = await _recipeRepository.GetByIdAsync(id) ??
+                throw new InvalidOperationException();
+
+            return recipe;
         }
 
-        public void AddRecipe(Recipe recipe)
+        public async Task AddRecipe(Recipe recipe)
         {
-            _recipeRepository.Add(recipe);
+            await _recipeRepository.AddAsync(recipe);
         }
 
-        public void UpdateRecipe(Recipe updatedRecipe)
+        public async Task UpdateRecipe(Recipe updatedRecipe)
         {
-            _recipeRepository.Update(updatedRecipe);
+            await _recipeRepository.Update(updatedRecipe);
         }
 
-        public void DeleteRecipe(int id)
+        public async Task DeleteRecipe(int id)
         {
-            _recipeRepository.Delete(id);
+            var recipe = await GetRecipeById(id);
+
+            await _recipeRepository.Delete(recipe);
         }
     }
 }

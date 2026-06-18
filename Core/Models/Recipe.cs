@@ -5,8 +5,8 @@ namespace Core.Models
     public class Recipe
     {
         public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public required string Title { get; set; }
+        public required string Description { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
         public TimeSpan PreparationTime { get; set; }
         public TimeSpan CookingTime { get; set; }
@@ -20,7 +20,7 @@ namespace Core.Models
         public ICollection<Recipe_Ingredient> Recipe_Ingredients { get; set; } = [];
         public ICollection<Recipe_Category> Recipe_Categories { get; set; } = [];
         public ICollection<CookingStep> CookingSteps { get; set; } = [];
-        public ICollection<Tips> Tips { get; set; } = [];
+        public ICollection<Tip> Tips { get; set; } = [];
         public User User { get; set; } = null!;
     }
 }

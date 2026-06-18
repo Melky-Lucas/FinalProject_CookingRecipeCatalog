@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Core.Models
 {
-    public class Tips
+    public class Tip
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public int RecipeId { get; set; }
-        public string Content { get; set; } = null!;
+        public required int UserId { get; set; }
+        public required int RecipeId { get; set; }
+        public required string Content { get; set; }
 
         // Navigation properties
         public Recipe Recipe { get; set; } = null!;
