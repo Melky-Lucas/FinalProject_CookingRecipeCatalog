@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Core.Models;
+using System.Reflection;
 
 namespace Data
 {
@@ -8,7 +9,12 @@ namespace Data
         public RecipeCatalogDBContext(DbContextOptions<RecipeCatalogDBContext> options) : 
             base(options)
         {
+            
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public DbSet<Recipe> Recipes { get; set; }

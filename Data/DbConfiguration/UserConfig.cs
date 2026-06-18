@@ -16,12 +16,12 @@ namespace Data.DbConfiguration
             builder.HasMany(u => u.Recipes)
                    .WithOne(r => r.User)
                    .HasForeignKey(r => r.UserId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(u => u.Tips)
                    .WithOne(t => t.User)
                    .HasForeignKey(t => t.UserId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

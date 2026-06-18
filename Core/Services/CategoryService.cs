@@ -1,8 +1,8 @@
 ﻿using Core.Interfaces;
 using Core.Models;
-
+/*
 namespace Core.Services
-{
+{ 
     public class CategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -38,3 +38,4 @@ namespace Core.Services
         }
     }
 }
+*/

@@ -10,7 +10,7 @@ namespace Core.Models
         public string Name { get; set; } = null!;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = null!;
-        public int IngredientCategoryId { get; set; }
+        public int? IngredientCategoryId { get; set; }
 
         // Navigation property
         public IngredientCategory IngredientCategory { get; set; } = null!;

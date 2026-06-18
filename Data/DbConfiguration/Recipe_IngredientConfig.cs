@@ -17,12 +17,12 @@ namespace Data.DbConfiguration
             builder.HasOne(ri => ri.Ingredient)
                    .WithMany(i => i.Recipe_Ingredients)
                    .HasForeignKey(ri => ri.IngredientId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(ri => ri.Unit)
                    .WithMany(u => u.Recipe_Ingredients)
                    .HasForeignKey(ri => ri.UnitId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
         }    
     }
 }

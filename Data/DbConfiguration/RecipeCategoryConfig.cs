@@ -16,7 +16,7 @@ namespace Data.DbConfiguration
             builder.HasMany(rc => rc.Recipe_Categories)
                 .WithOne(RC => RC.Category)
                 .HasForeignKey(RC => RC.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
