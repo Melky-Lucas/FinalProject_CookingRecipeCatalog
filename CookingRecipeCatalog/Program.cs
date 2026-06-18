@@ -1,4 +1,7 @@
+using Core.Interfaces;
+using Core.Services;
 using Data;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +14,11 @@ builder.Services.AddDbContext<RecipeCatalogDBContext>((serviceProvider, o) =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
 builder.Services.AddScoped<RecipeCatalogDBContext>();
+
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+builder.Services.AddScoped<RecipeService>();
+
+builder.Services.AddScoped<IRecipeCategoryRepository, RecipeCategoryRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

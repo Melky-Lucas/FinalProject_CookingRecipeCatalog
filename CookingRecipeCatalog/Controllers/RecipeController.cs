@@ -1,6 +1,7 @@
 ﻿using Core.Models;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
-/*
+
 namespace CookingRecipeCatalog.Controllers
 {
     [ApiController]
@@ -15,17 +16,17 @@ namespace CookingRecipeCatalog.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Recipe>> GetAllRecipes()
+        public async Task<ActionResult<List<Recipe>>> GetAllRecipes()
         {
-            return Ok(_recipeService.GetAllRecipes());
+            return Ok(await _recipeService.GetAllRecipes());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Recipe> GetRecipeById(int id)
+        public async Task<ActionResult<Recipe>> GetRecipeById(int id)
         {
             try
             {
-                return Ok(_recipeService.GetRecipeById(id));
+                return Ok(await _recipeService.GetRecipeById(id));
             }
             catch (InvalidOperationException ex)
             {
@@ -34,18 +35,18 @@ namespace CookingRecipeCatalog.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRecipe(Recipe recipe)
+        public async Task<IActionResult> AddRecipe(Recipe recipe)
         {
-            _recipeService.AddRecipe(recipe);
+            await _recipeService.AddRecipe(recipe);
             return CreatedAtAction(nameof(GetRecipeById), new { id = recipe.Id }, recipe);
         }
 
         [HttpPut]
-        public IActionResult UpdateRecipe(Recipe updatedRecipe)
+        public async Task<IActionResult> UpdateRecipe(Recipe updatedRecipe)
         {
             try
             {
-                _recipeService.UpdateRecipe(updatedRecipe);
+                await _recipeService.UpdateRecipe(updatedRecipe);
                 return NoContent();
             }
             catch (InvalidOperationException ex)
@@ -55,11 +56,11 @@ namespace CookingRecipeCatalog.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteRecipe(int id)
+        public async Task<IActionResult> DeleteRecipe(int id)
         {
             try
             {
-                _recipeService.DeleteRecipe(id);
+                await _recipeService.DeleteRecipe(id);
                 return NoContent();
             }
             catch (InvalidOperationException ex)
@@ -69,4 +70,3 @@ namespace CookingRecipeCatalog.Controllers
         }
     }
 }
-*/
