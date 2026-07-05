@@ -3,6 +3,7 @@ using Core.Services;
 using Data;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,12 @@ builder.Services.AddScoped<RecipeCatalogDBContext>();
 
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<RecipeService>();
+
+builder.Services.AddScoped<IObjectMapper, AutoMapperAdapter>();
+
+builder.Services.AddAutoMapper(cfg =>
+    cfg.AddProfile<MappingProfile>()
+);
 
 builder.Services.AddScoped<IRecipeCategoryRepository, RecipeCategoryRepository>();
 

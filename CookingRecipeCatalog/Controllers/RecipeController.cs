@@ -1,32 +1,40 @@
-﻿using Core.Models;
+﻿using Core.DTOs;
+using Core.Interfaces;
+using Core.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CookingRecipeCatalog.Controllers
+namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class RecipeController : ControllerBase
     {
         private readonly RecipeService _recipeService;
+        private readonly IObjectMapper _mapper;
 
-        public RecipeController(RecipeService recipeService)
+        public RecipeController(RecipeService recipeService, IObjectMapper mapper)
         {
             _recipeService = recipeService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Recipe>>> GetAllRecipes()
+        public async Task<ActionResult<List<RecipeDTO>>> GetAll()
         {
-            return Ok(await _recipeService.GetAllRecipes());
+            var recipes = await _recipeService.GetAll();
+
+            return Ok(recipes.Select(r => _mapper.Map<Recipe, RecipeDTO>(r)));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipeById(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                return Ok(await _recipeService.GetRecipeById(id));
+                var recipe = await _recipeService.GetById(id);
+
+                return Ok(_mapper.Map<Recipe, RecipeDTO>(recipe));
             }
             catch (InvalidOperationException ex)
             {
@@ -35,18 +43,24 @@ namespace CookingRecipeCatalog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecipe(Recipe recipe)
+        public async Task<IActionResult> Post(CreateRecipeDTO recipeDTO)
         {
-            await _recipeService.AddRecipe(recipe);
-            return CreatedAtAction(nameof(GetRecipeById), new { id = recipe.Id }, recipe);
+            var recipe = _mapper.Map<CreateRecipeDTO, Recipe>(recipeDTO);
+            await _recipeService.Add(recipe);
+            return CreatedAtAction(nameof(Get), new { id = recipe.Id }, recipe);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateRecipe(Recipe updatedRecipe)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, UpdateRecipeDTO recipeDTO)
         {
             try
             {
-                await _recipeService.UpdateRecipe(updatedRecipe);
+                var recipe = _mapper.Map<UpdateRecipeDTO, Recipe>(recipeDTO);
+
+                if (id != recipe.Id)
+                    throw new InvalidOperationException("El ID de la receta no coincide con la URI");
+
+                await _recipeService.Update(recipe);
                 return NoContent();
             }
             catch (InvalidOperationException ex)
@@ -56,11 +70,11 @@ namespace CookingRecipeCatalog.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRecipe(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                await _recipeService.DeleteRecipe(id);
+                await _recipeService.Delete(id);
                 return NoContent();
             }
             catch (InvalidOperationException ex)
