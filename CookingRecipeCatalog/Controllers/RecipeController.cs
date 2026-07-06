@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             return Ok(recipes.Select(r => _mapper.Map<Recipe, RecipeDTO>(r)));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
             return CreatedAtAction(nameof(Get), new { id = recipe.Id }, recipe);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, UpdateRecipeDTO recipeDTO)
         {
             try
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
