@@ -11,7 +11,7 @@ namespace Data.DbConfiguration
             builder.Property(r => r.Title)
                 .HasMaxLength(100);
 
-            builder.Property(r => r.Description)
+            builder.Property(r => r.Instruction)
                 .HasMaxLength(250);
         }
     }
