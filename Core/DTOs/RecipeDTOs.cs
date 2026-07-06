@@ -15,11 +15,11 @@ namespace Core.DTOs
         public RecipeDifficulty Difficulty { get; set; }
         public int Calories { get; set; }
         public bool IsPublic { get; set; }
-        public ICollection<Recipe_Ingredient> Recipe_Ingredients { get; set; } = [];
-        public ICollection<RecipeCategory> Categories { get; set; } = [];
+        public ICollection<Recipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
+        public ICollection<RecipeCategoryDTO> Categories { get; set; } = [];
         public ICollection<RecipeCookingStepDTO> CookingSteps { get; set; } = [];
         public ICollection<RecipeTipDTO> Tips { get; set; } = [];
-        public User User { get; set; } = null!;
+        public string Username { get; set; } = null!;
 
     }
 
@@ -36,7 +36,7 @@ namespace Core.DTOs
         public int UserId { get; set; }
         public bool IsPublic { get; set; }
         public int[] Category_Ids { get; set; } = [];
-        public ICollection<Recipe_Ingredient> Recipe_Ingredients { get; set; } = [];
+        public ICollection<CreateRecipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
         public ICollection<CreateCookingStepDTO> CookingSteps { get; set; } = [];
         public ICollection<CreateTipDTO> Tips { get; set; } = [];
     }
@@ -54,6 +54,6 @@ namespace Core.DTOs
         public int Calories { get; set; }
         public bool IsPublic { get; set; }
         public int[] Category_Ids { get; set; } = [];
-        public ICollection<Recipe_Ingredient> Recipe_Ingredients { get; set; } = [];
+        public ICollection<UpdateRecipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
     }
 }
