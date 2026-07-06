@@ -20,7 +20,6 @@ namespace Core.DTOs
         public ICollection<RecipeCookingStepDTO> CookingSteps { get; set; } = [];
         public ICollection<RecipeTipDTO> Tips { get; set; } = [];
         public string Username { get; set; } = null!;
-
     }
 
     public class CreateRecipeDTO
