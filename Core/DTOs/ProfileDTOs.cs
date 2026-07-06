@@ -8,7 +8,7 @@
         public ICollection<RecipeDTO> Recipes { get; set; } = [];
     }
 
-    public class UpdateUsernameDTO
+    public class ChangeeUsernameDTO
     {
         public string NewUsername { get; set; } = null!;
     }

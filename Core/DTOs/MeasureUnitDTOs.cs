@@ -10,4 +10,17 @@ namespace Core.DTOs
         public required string Name { get; set; }
         public string Abbreviation { get; set; } = null!;
     }
+
+    public class CreateMeasureUnitDTO
+    {
+        public required string Name { get; set; }
+        public string Abbreviation { get; set; } = null!;
+    }
+
+    public class UpdateMeasureUnitDTO
+    {
+        public int Id { get; set; }
+        public required string Name { get; set; }
+        public string Abbreviation { get; set; } = null!;
+    }
 }
