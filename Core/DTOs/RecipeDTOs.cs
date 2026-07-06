@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using static Core.Models.Enums.ModelEnums;
+﻿using static Core.Models.Enums.ModelEnums;
 
 namespace Core.DTOs
 {
