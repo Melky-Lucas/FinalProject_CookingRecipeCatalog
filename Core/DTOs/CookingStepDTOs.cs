@@ -2,6 +2,7 @@
 {
     public class RecipeCookingStepDTO
     {
+        public int Id { get; set; }
         public int StepNumber { get; set; }
         public string Title { get; set; } = null!;
         public TimeSpan EstimatedDuration { get; set; }
