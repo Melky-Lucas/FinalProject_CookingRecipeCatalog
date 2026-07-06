@@ -18,7 +18,7 @@ namespace Core.DTOs
         public ICollection<Recipe_Ingredient> Recipe_Ingredients { get; set; } = [];
         public ICollection<RecipeCategory> Categories { get; set; } = [];
         public ICollection<RecipeCookingStepDTO> CookingSteps { get; set; } = [];
-        public ICollection<Tip> Tips { get; set; } = [];
+        public ICollection<RecipeTipDTO> Tips { get; set; } = [];
         public User User { get; set; } = null!;
 
     }
@@ -38,7 +38,7 @@ namespace Core.DTOs
         public int[] Category_Ids { get; set; } = [];
         public ICollection<Recipe_Ingredient> Recipe_Ingredients { get; set; } = [];
         public ICollection<CreateCookingStepDTO> CookingSteps { get; set; } = [];
-        public ICollection<Tip> Tips { get; set; } = [];
+        public ICollection<CreateTipDTO> Tips { get; set; } = [];
     }
 
     public class UpdateRecipeDTO
