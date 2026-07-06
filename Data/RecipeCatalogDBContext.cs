@@ -28,5 +28,6 @@ namespace Data
         public DbSet<Password> Passwords { get; set; }
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
         public DbSet<MeasureUnit> MeasureUnits { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }
