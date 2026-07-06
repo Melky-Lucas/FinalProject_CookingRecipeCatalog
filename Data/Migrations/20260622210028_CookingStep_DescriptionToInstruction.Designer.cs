@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RecipeCatalogDBContext))]
-    partial class RecipeCatalogDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260622210028_CookingStep_DescriptionToInstruction")]
+    partial class CookingStep_DescriptionToInstruction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,24 +286,6 @@ namespace Data.Migrations
                     b.ToTable("Recipe_Ingredients");
                 });
 
-            modelBuilder.Entity("Core.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("Core.Models.Tip", b =>
                 {
                     b.Property<int>("Id")
@@ -345,17 +330,12 @@ namespace Data.Migrations
                     b.Property<int>("PasswordId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -468,17 +448,6 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Core.Models.User", b =>
-                {
-                    b.HasOne("Core.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("Core.Models.Ingredient", b =>
                 {
                     b.Navigation("Recipe_Ingredients");
@@ -508,11 +477,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Core.Models.RecipeCategory", b =>
                 {
                     b.Navigation("Recipe_Categories");
-                });
-
-            modelBuilder.Entity("Core.Models.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Core.Models.User", b =>
