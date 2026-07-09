@@ -1,4 +1,4 @@
-﻿using static Core.Models.Enums.ModelEnums;
+﻿using static Core.Enums.ModelEnums;
 
 namespace Core.Models
 {

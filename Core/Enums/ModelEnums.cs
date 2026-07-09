@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.Models.Enums
+namespace Core.Enums
 {
     public class ModelEnums
     {
