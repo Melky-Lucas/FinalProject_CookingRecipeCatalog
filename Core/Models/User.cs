@@ -1,8 +1,9 @@
-﻿namespace Core.Models
+using Core.Base;
+
+namespace Core.Models
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public string Username { get; set; } = null!;
         public required string Email { get; set; }
         public required int PasswordId { get; set; }

@@ -1,8 +1,9 @@
-﻿namespace Core.Models
+﻿using Core.Base;
+
+namespace Core.Models
 {
-    public class MeasureUnit
+    public class MeasureUnit : BaseEntity
     {
-        public int Id { get; set; }
         public required string Name { get; set; }
         public string Abbreviation { get; set; } = null!;
 
