@@ -1,4 +1,4 @@
-﻿using Core.Base;
+using Core.Base;
 
 namespace Core.Models
 {

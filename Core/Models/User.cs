@@ -1,4 +1,4 @@
-﻿using Core.Base;
+using Core.Base;
 
 namespace Core.Models
 {
@@ -14,5 +14,7 @@ namespace Core.Models
         public Role Role { get; set; } = null!;
         public ICollection<Recipe> Recipes { get; set; } = [];
         public ICollection<Tip> Tips { get; set; } = [];
+
+        public bool IsAdmin => Role.Name == "Admin";
     }
 }
