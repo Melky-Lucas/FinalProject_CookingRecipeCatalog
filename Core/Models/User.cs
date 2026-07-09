@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Models
+﻿namespace Core.Models
 {
     public class User
     {
@@ -17,5 +13,7 @@ namespace Core.Models
         public Role Role { get; set; } = null!;
         public ICollection<Recipe> Recipes { get; set; } = [];
         public ICollection<Tip> Tips { get; set; } = [];
+
+        public bool IsAdmin => Role.Name == "Admin";
     }
 }
