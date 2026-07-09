@@ -1,8 +1,9 @@
-﻿namespace Core.Models
+﻿using Core.Base;
+
+namespace Core.Models
 {
-    public class RecipeCategory
+    public class RecipeCategory : BaseEntity
     {
-        public int Id { get; set; }
         public required string Name { get; set; }
         public string Description { get; set; } = string.Empty;
 
