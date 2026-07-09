@@ -1,5 +1,5 @@
-﻿using Core.Base;
-using static Core.Models.Enums.ModelEnums;
+using Core.Base;
+using static Core.Enums.ModelEnums;
 
 namespace Core.Models
 {
