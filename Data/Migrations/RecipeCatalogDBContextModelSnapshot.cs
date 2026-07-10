@@ -53,7 +53,7 @@ namespace Data.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("CookingSteps");
+                    b.ToTable("CookingSteps", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Ingredient", b =>
@@ -86,7 +86,7 @@ namespace Data.Migrations
 
                     b.HasIndex("IngredientCategoryId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.IngredientCategory", b =>
@@ -109,7 +109,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IngredientCategories");
+                    b.ToTable("IngredientCategories", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.MeasureUnit", b =>
@@ -132,7 +132,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MeasureUnits");
+                    b.ToTable("MeasureUnits", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Password", b =>
@@ -155,7 +155,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Passwords");
+                    b.ToTable("Passwords", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Recipe", b =>
@@ -208,7 +208,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.RecipeCategory", b =>
@@ -231,7 +231,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RecipeCategories");
+                    b.ToTable("RecipeCategories", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Recipe_Category", b =>
@@ -246,7 +246,7 @@ namespace Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Recipe_Categories");
+                    b.ToTable("Recipe_Categories", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Recipe_Ingredient", b =>
@@ -280,7 +280,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Recipe_Ingredients");
+                    b.ToTable("Recipe_Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Role", b =>
@@ -298,7 +298,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Tip", b =>
@@ -326,7 +326,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tips");
+                    b.ToTable("Tips", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.User", b =>
@@ -357,7 +357,7 @@ namespace Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.CookingStep", b =>

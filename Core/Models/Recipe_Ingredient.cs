@@ -1,8 +1,9 @@
-﻿namespace Core.Models
+﻿using Core.Base;
+
+namespace Core.Models
 {
-    public class Recipe_Ingredient
+    public class Recipe_Ingredient : BaseEntity
     {
-        public int Id { get; set; }
         public required int RecipeId { get; set; }
         public required int IngredientId { get; set; }
         public int Quantity { get; set; }

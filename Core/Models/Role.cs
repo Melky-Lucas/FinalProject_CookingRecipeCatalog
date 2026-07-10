@@ -1,8 +1,9 @@
-﻿namespace Core.Models
+﻿using Core.Base;
+
+namespace Core.Models
 {
-    public class Role
+    public class Role : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public ICollection<User> Users { get; set; } = [];
     }

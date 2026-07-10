@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 ﻿namespace Core.Models
+=======
+﻿using Core.Base;
+
+namespace Core.Models
+>>>>>>> develop
 {
-    public class Password
+    public class Password : BaseEntity
     {
-        public int Id { get; set; }
         public string PasswordHash { get; set; } = null!;
         public string Salt { get; set; } = null!;
         public DateTime UpdatedAt { get; set; }
