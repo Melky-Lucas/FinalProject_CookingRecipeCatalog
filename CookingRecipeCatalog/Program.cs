@@ -1,6 +1,7 @@
 using Core.Interfaces;
+using Core.Interfaces.Repositories;
 using Core.Services;
-using Data;
+using Data.Context;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.AutoMapper;

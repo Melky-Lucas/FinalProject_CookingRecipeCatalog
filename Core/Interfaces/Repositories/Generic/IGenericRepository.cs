@@ -1,4 +1,4 @@
-﻿namespace Core.Interfaces
+﻿namespace Core.Interfaces.Repositories.Generic
 {
     public interface IGenericRepository<T> where T : class
     {

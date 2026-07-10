@@ -5,12 +5,11 @@ using Data.Repositories.Generic;
 
 namespace Data.Repositories
 {
-    public class RecipeRepository : GenericRepository<Recipe>,  IRecipeRepository
+    public class CookingStepRepository : GenericRepository<CookingStep>, ICookingStepRepository
     {
-        public RecipeRepository(RecipeCatalogDBContext context)
+        public CookingStepRepository(RecipeCatalogDBContext context)
             : base(context)
         {
-            
         }
     }
 }
