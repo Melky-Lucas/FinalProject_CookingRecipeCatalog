@@ -8,9 +8,8 @@ namespace Core.Interfaces
     {
         Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false);
         Task<T?> GetByIdAsync(object id);
-
-        Task AddAsync(T entity);
-        Task Update(T entity);
-        Task Delete(T entity);
+        void AddAsync(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }

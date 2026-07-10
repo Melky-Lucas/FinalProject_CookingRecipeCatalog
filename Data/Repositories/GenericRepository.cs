@@ -1,8 +1,5 @@
 ﻿using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.Repositories
 {
@@ -13,20 +10,18 @@ namespace Data.Repositories
 
         protected GenericRepository(DbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
             _table = _context.Set<T>();
         }
 
-        public async Task AddAsync(T entity)
+        public void AddAsync(T entity)
         {
-            await _table.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            _table.Add(entity);
         }
 
-        public async Task Delete(T entity)
+        public void Delete(T entity)
         {
             _table.Remove(entity);
-            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false)
@@ -41,11 +36,10 @@ namespace Data.Repositories
             return await _table.FindAsync(id);
         }
 
-        public async Task Update(T entity)
+        public void Update(T entity)
         {
             _table.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
         }
     }
 }
