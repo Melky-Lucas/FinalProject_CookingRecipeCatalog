@@ -28,19 +28,19 @@ namespace Core.Services
 
         public async Task Add(Recipe recipe)
         {
-            await _recipeRepository.AddAsync(recipe);
+            _recipeRepository.Add(recipe);
         }
 
         public async Task Update(Recipe updatedRecipe)
         {
-            await _recipeRepository.Update(updatedRecipe);
+            _recipeRepository.Update(updatedRecipe);
         }
 
         public async Task Delete(int id)
         {
             var recipe = await GetById(id);
 
-            await _recipeRepository.Delete(recipe);
+            _recipeRepository.Delete(recipe);
         }
     }
 }
