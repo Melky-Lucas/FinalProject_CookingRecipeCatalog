@@ -1,10 +1,10 @@
-﻿using static Core.Models.Enums.ModelEnums;
+using Core.Base;
+using static Core.Enums.ModelEnums;
 
 namespace Core.Models
 {
-    public class Recipe
+    public class Recipe : BaseEntity
     {
-        public int Id { get; set; }
         public required string Title { get; set; }
         public required string Description { get; set; }
         public string ImageUrl { get; set; } = string.Empty;

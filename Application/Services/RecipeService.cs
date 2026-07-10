@@ -1,8 +1,7 @@
-﻿using Core.DTOs;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Core.Models;
 
-namespace Core.Services
+namespace Application.Services
 {
     public class RecipeService
     {

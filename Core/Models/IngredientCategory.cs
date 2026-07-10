@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Core.Base;
 
 namespace Core.Models
 {
-    public class IngredientCategory
+    public class IngredientCategory : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
 
