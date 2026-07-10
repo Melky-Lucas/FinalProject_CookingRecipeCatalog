@@ -14,7 +14,7 @@ namespace Data.Repositories
             _table = _context.Set<T>();
         }
 
-        public void AddAsync(T entity)
+        public void Add(T entity)
         {
             _table.Add(entity);
         }
