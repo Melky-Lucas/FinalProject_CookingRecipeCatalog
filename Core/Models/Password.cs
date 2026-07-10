@@ -1,6 +1,10 @@
+<<<<<<< HEAD
+﻿namespace Core.Models
+=======
 ﻿using Core.Base;
 
 namespace Core.Models
+>>>>>>> develop
 {
     public class Password : BaseEntity
     {
