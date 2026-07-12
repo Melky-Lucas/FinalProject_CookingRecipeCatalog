@@ -3,12 +3,13 @@ using Core.Interfaces;
 using Core.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RecipeController : ControllerBase
+    public class RecipeController : ApiBaseController
     {
         private readonly RecipeService _recipeService;
         private readonly IObjectMapper _mapper;
