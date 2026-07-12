@@ -8,7 +8,7 @@ namespace Core.Interfaces
         IUserRepository Users { get; }
         IIngredientRepository Ingredients { get; }
         ICookingStepRepository CookingSteps { get; }
-        ITipRepository TipRepository { get; }
+        ITipRepository Tips { get; }
         IRecipeCategoryRepository RecipeCategories { get; }
         IRecipe_CategoryRepository Recipe_Category { get; }
         IRecipe_IngredientRepository Recipe_Ingredients { get; }
