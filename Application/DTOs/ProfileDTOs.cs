@@ -9,6 +9,13 @@
         public ICollection<RecipeDTO> Recipes { get; set; } = [];
     }
 
+    public class UpdateProfileDTO
+    {
+        public string Username { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public int RoleId { get; set; }
+    }
+
     public class ChangeUsernameDTO
     {
         public string NewUsername { get; set; } = null!;
