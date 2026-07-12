@@ -1,5 +1,5 @@
 ﻿using Application.Base;
-using Core.DTOs;
+using Application.DTOs;
 
 namespace Application.Contract
 {

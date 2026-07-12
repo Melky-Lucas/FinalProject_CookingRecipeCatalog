@@ -1,45 +1,21 @@
-﻿using Core.Interfaces.Repositories;
+﻿using Application.Base;
+using Application.Contract;
+using Application.DTOs;
+using Core.Interfaces;
+using Core.Interfaces.Repositories.Generic;
 using Core.Models;
 
 namespace Application.Services
 {
-    public class RecipeService
+    public class RecipeService : BaseService<Recipe, RecipeDTO, CreateRecipeDTO, UpdateRecipeDTO> ,IRecipeService
     {
-        private readonly IRecipeRepository _recipeRepository;
+        protected override IGenericRepository<Recipe> Repository => _unitOfWork.Recipes;
 
-        public RecipeService(IRecipeRepository recipeRepository)
+        public RecipeService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
+             : base(unitOfWork, objectMapper) 
         {
-            _recipeRepository = recipeRepository;
+
         }
 
-        public async Task<IEnumerable<Recipe>> GetAll()
-        {
-            return await _recipeRepository.GetAllAsync();
-        }
-
-        public async Task<Recipe> GetById(int id)
-        {
-            var recipe = await _recipeRepository.GetByIdAsync(id) ??
-                throw new InvalidOperationException("Recipe not found");
-
-            return recipe;
-        }
-
-        public async Task Add(Recipe recipe)
-        {
-            _recipeRepository.Add(recipe);
-        }
-
-        public async Task Update(Recipe updatedRecipe)
-        {
-            _recipeRepository.Update(updatedRecipe);
-        }
-
-        public async Task Delete(int id)
-        {
-            var recipe = await GetById(id);
-
-            _recipeRepository.Delete(recipe);
-        }
     }
 }
