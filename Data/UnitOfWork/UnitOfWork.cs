@@ -37,7 +37,7 @@ namespace Data.UnitOfWork
 
         public ICookingStepRepository CookingSteps => _cookingStepRepository ??= new CookingStepRepository(_context);
 
-        public ITipRepository TipRepository => _tipRepository ??= new TipRepository(_context);
+        public ITipRepository Tips => _tipRepository ??= new TipRepository(_context);
 
         public IRecipeCategoryRepository RecipeCategories => _recipeCategoryRepository ??= new RecipeCategoryRepository(_context);
 

@@ -1,4 +1,4 @@
-﻿namespace Core.DTOs
+﻿namespace Application.DTOs
 {
     public class ProfileDTO
     {
@@ -7,6 +7,13 @@
         public string Email { get; set; } = null!;
         public string RoleName { get; set; } = null!;
         public ICollection<RecipeDTO> Recipes { get; set; } = [];
+    }
+
+    public class UpdateProfileDTO
+    {
+        public string Username { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public int RoleId { get; set; }
     }
 
     public class ChangeUsernameDTO
