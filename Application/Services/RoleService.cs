@@ -10,8 +10,8 @@ namespace Application.Services
     public class RoleService : BaseService<Role, RoleDTO, CreateRoleDTO, UpdateRoleDTO>, IRoleService
     {
         protected override IGenericRepository<Role> Repository => _unitOfWork.Roles;
-        public RoleService(IUnitOfWork unitOfWork, IObjectMapper objectMapper) 
-           : base(unitOfWork, objectMapper)
+        public RoleService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider) 
+           : base(unitOfWork, objectMapper, serviceProvider)
         {
 
         }

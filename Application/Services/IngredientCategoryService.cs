@@ -11,8 +11,8 @@ namespace Application.Services
         IIngredientCategoryService
     {
         protected override IGenericRepository<IngredientCategory> Repository => _unitOfWork.IngredientCategories;
-        public IngredientCategoryService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-            : base(unitOfWork, objectMapper)
+        public IngredientCategoryService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+            : base(unitOfWork, objectMapper, serviceProvider)
         {
         }
     }

@@ -89,4 +89,5 @@ namespace Application.DTOs.Validators
             }
 
         }
+    }
 }

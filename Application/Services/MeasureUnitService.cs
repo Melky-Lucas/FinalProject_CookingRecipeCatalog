@@ -10,8 +10,8 @@ namespace Application.Services
     public class MeasureUnitService : BaseService<MeasureUnit, MeasureUnitDTO, CreateMeasureUnitDTO, UpdateMeasureUnitDTO>, IMeasureUnitService
     {
         protected override IGenericRepository<MeasureUnit> Repository => _unitOfWork.MeasureUnits;
-        public MeasureUnitService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-            : base(unitOfWork, objectMapper)
+        public MeasureUnitService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+            : base(unitOfWork, objectMapper, serviceProvider)
         {
 
         }

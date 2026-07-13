@@ -11,8 +11,8 @@ namespace Application.Services
     {
         protected override IGenericRepository<Recipe> Repository => _unitOfWork.Recipes;
 
-        public RecipeService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-             : base(unitOfWork, objectMapper) 
+        public RecipeService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+             : base(unitOfWork, objectMapper, serviceProvider) 
         {
 
         }

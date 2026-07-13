@@ -10,8 +10,8 @@ namespace Application.Services
     public class TipService : BaseService<Tip, RecipeTipDTO, CreateTipDTO, UpdateTipDTO>, ITipService
     {
         protected override IGenericRepository<Tip> Repository => _unitOfWork.Tips;
-        public TipService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-           : base(unitOfWork, objectMapper)
+        public TipService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+           : base(unitOfWork, objectMapper, serviceProvider)
         {
 
         }
