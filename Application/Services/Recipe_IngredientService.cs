@@ -1,0 +1,18 @@
+﻿using Application.Base;
+using Application.Contract;
+using Application.DTOs;
+using Core.Interfaces;
+using Core.Interfaces.Repositories.Generic;
+using Core.Models;
+
+namespace Application.Services
+{
+    public class Recipe_IngredientService : BaseService<Recipe_Ingredient, Recipe_IngredientDTO, CreateRecipe_IngredientDTO, UpdateRecipe_IngredientDTO>, IRecipe_IngredientService
+    {
+        protected override IGenericRepository<Recipe_Ingredient> Repository => _unitOfWork.Recipe_Ingredients;
+        public Recipe_IngredientService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+            : base(unitOfWork, objectMapper, serviceProvider)
+        {
+        }
+    }
+}

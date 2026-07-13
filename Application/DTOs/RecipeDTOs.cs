@@ -1,6 +1,6 @@
-﻿using static Core.Models.Enums.ModelEnums;
+﻿using static Core.Enums.ModelEnums;
 
-namespace Core.DTOs
+namespace Application.DTOs
 {
     public class RecipeDTO
     {
