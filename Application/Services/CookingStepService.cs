@@ -10,10 +10,9 @@ namespace Application.Services
     public class CookingStepService : BaseService<CookingStep, RecipeCookingStepDTO, CreateCookingStepDTO, UpdateCookingStepDTO>, ICookingStepService
     {
         protected override IGenericRepository<CookingStep> Repository => _unitOfWork.CookingSteps;
-        public CookingStepService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-            : base(unitOfWork, objectMapper)
+        public CookingStepService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+            : base(unitOfWork, objectMapper, serviceProvider)
         {
         }
-    {
     }
 }

@@ -1,8 +1,10 @@
+using Application.Contract;
+using Application.Services;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
-using Core.Services;
 using Data.Context;
 using Data.Repositories;
+using Data.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.AutoMapper;
 
@@ -18,9 +20,10 @@ builder.Services.AddDbContext<RecipeCatalogDBContext>((serviceProvider, o) =>
 builder.Services.AddScoped<RecipeCatalogDBContext>();
 
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
-builder.Services.AddScoped<RecipeService>();
+builder.Services.AddScoped<IRecipeService, RecipeService>();
 
 builder.Services.AddScoped<IObjectMapper, AutoMapperAdapter>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<MappingProfile>()

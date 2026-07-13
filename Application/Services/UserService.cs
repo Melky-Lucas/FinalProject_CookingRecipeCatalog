@@ -10,8 +10,8 @@ namespace Application.Services
     public class UserService : BaseService<User, ProfileDTO, RegisterUserDTO, UpdateProfileDTO>, IUserService
     {
         protected override IGenericRepository<User> Repository => _unitOfWork.Users;
-        public UserService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-            : base(unitOfWork, objectMapper)
+        public UserService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+            : base(unitOfWork, objectMapper, serviceProvider)
         {
 
         }

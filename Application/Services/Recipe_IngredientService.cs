@@ -10,10 +10,9 @@ namespace Application.Services
     public class Recipe_IngredientService : BaseService<Recipe_Ingredient, Recipe_IngredientDTO, CreateRecipe_IngredientDTO, UpdateRecipe_IngredientDTO>, IRecipe_IngredientService
     {
         protected override IGenericRepository<Recipe_Ingredient> Repository => _unitOfWork.Recipe_Ingredients;
-        public Recipe_IngredientService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-            : base(unitOfWork, objectMapper)
+        public Recipe_IngredientService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+            : base(unitOfWork, objectMapper, serviceProvider)
         {
         }
-    {
     }
 }

@@ -10,8 +10,8 @@ namespace Application.Services
     public class IngredientService : BaseService<Ingredient, IngredientDTO, CreateIngredientDTO, UpdateIngredientDTO>, IIngredientService
     {
         protected override IGenericRepository<Ingredient> Repository => _unitOfWork.Ingredients;
-        public IngredientService(IUnitOfWork unitOfWork, IObjectMapper objectMapper)
-            : base(unitOfWork, objectMapper)
+        public IngredientService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
+            : base(unitOfWork, objectMapper, serviceProvider)
         {
 
         }
