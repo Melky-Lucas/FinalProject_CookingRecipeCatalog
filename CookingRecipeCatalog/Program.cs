@@ -2,11 +2,11 @@ using Application.Contract;
 using Application.Services;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
-using Data.Context;
-using Data.Repositories;
-using Data.UnitOfWork;
+using Infrastructure.Context;
+using Infrastructure.Mapping;
+using Infrastructure.Repositories;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
