@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Data.DbConfiguration
+namespace Infrastructure.DbConfiguration
 {
     public class Recipe_CategoryConfig : IEntityTypeConfiguration<Recipe_Category>
     {

@@ -3,7 +3,7 @@ using AutoMapper;
 using Core.Models;
 
 
-namespace WebAPI.AutoMapper
+namespace Infrastructure.Mapping
 {
     public class MappingProfile : Profile
     {
