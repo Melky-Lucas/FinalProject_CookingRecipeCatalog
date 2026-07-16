@@ -3,7 +3,7 @@ using Application.DTOs;
 
 namespace Application.Contract
 {
-    public interface ITipService : IBaseService<RecipeTipDTO, CreateTipDTO, UpdateTipDTO>
+    public interface ITipService : IBaseService<RecipeTipDTO, CreateRecipeTipDTO, UpdateTipDTO>
     {
     }
 }

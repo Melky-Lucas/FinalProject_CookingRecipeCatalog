@@ -6,9 +6,6 @@ namespace Application.DTOs.Validators
     {
         public CreateRecipe_IngredientDTOValidator()
         {
-            RuleFor(x => x.RecipeId)
-                .GreaterThan(0).WithMessage("RecipeId must be greater than zero.");
-
             RuleFor(x => x.IngredientId)
                 .GreaterThan(0).WithMessage("IngredientId must be greater than zero.");
 

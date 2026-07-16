@@ -2,15 +2,12 @@
 
 namespace Application.DTOs.Validators
 {
-    public class CreateCookingStepDTOValidator : AbstractValidator<CreateCookingStepDTO>
+    public class CreateCookingStepDTOValidator : AbstractValidator<CreateRecipeCookingStepDTO>
     {
         public CreateCookingStepDTOValidator()
         {
             RuleFor(x => x.StepNumber)
                 .GreaterThan(0).WithMessage("Step number must be greater than zero.");
-
-            RuleFor(x => x.RecipeId)
-                .GreaterThan(0).WithMessage("RecipeId must be greater than zero.");
 
             RuleFor(x => x.Title)
                 .NotEmpty().WithMessage("Title is required.")
