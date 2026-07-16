@@ -10,9 +10,8 @@
 
     }
 
-    public class CreateCookingStepDTO
+    public class CreateRecipeCookingStepDTO
     {
-        public int RecipeId { get; set; }
         public int StepNumber { get; set; }
         public string Title { get; set; } = null!;
         public TimeSpan EstimatedDuration { get; set; }

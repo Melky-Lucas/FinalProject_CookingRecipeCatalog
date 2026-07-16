@@ -7,19 +7,13 @@ namespace WebAPI.Controllers.Base
     {
         protected IActionResult HandleResult<T>(ServiceResult<T> result)
         {
-            if (result.IsSuccess) return Ok(result.Data);
+            if (result.IsSuccess) return StatusCode(result.StatusCode, result.Data);
 
-            return result.StatusCode switch
-            {
-                404 => NotFound(result.Message),
-                400 => BadRequest(result.Message),
-                _ => StatusCode(result.StatusCode, result.Message)
-            };
+            return StatusCode(result.StatusCode, result.Data);
         }
 
         protected IActionResult HandleResult(ServiceResult result)
         {
-            if (result.IsSuccess) return Ok(result.Message);
             return StatusCode(result.StatusCode, result.Message);
         }
     }
