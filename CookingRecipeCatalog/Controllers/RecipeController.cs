@@ -31,9 +31,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreateRecipeDTO recipeDTO)
         {
-            var createdRecipe = HandleResult(await _recipeService.CreateAsync(recipeDTO));
-
-            return createdRecipe;
+            return HandleResult(await _recipeService.CreateAsync(recipeDTO));
         }
 
         [HttpPut("{id:int}")]
