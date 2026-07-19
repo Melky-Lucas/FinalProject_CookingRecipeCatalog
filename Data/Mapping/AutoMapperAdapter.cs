@@ -1,7 +1,7 @@
+using Application.Interfaces;
 using AutoMapper;
-using Core.Interfaces;
 
-namespace WebAPI.AutoMapper 
+namespace Infrastructure.Mapping 
 {
     public class AutoMapperAdapter : IObjectMapper
     {

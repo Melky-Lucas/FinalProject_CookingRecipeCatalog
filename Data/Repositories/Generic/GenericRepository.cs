@@ -1,7 +1,7 @@
 ﻿using Core.Interfaces.Repositories.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.Repositories.Generic
+namespace Infrastructure.Repositories.Generic
 {
     public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
     {

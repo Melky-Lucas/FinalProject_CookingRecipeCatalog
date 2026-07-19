@@ -1,0 +1,50 @@
+﻿using Application.Contract;
+using Application.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using WebAPI.Controllers.Base;
+
+namespace WebAPI.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MeasureUnitController : ApiBaseController
+    {
+        private readonly IMeasureUnitService _measureUnitService;
+
+        public MeasureUnitController(IMeasureUnitService measureUnitService)
+        {
+            _measureUnitService = measureUnitService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return HandleResult(await _measureUnitService.GetAllAsync());
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            return HandleResult(await _measureUnitService.GetByIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateMeasureUnitDTO measureUnitDTO)
+        {
+            return HandleResult(await _measureUnitService.CreateAsync(measureUnitDTO));
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, UpdateMeasureUnitDTO measureUnitDTO)
+        {
+            return HandleResult(await _measureUnitService.UpdateAsync(id, measureUnitDTO));
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return HandleResult(await _measureUnitService.DeleteAsync(id));
+        }
+    }
+}
+

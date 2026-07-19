@@ -1,4 +1,5 @@
 ﻿using Application.Exceptions;
+using Application.Interfaces;
 using Core.Base;
 using Core.Interfaces;
 using Core.Interfaces.Repositories.Generic;
@@ -33,8 +34,9 @@ namespace Application.Base
         public virtual async Task<ServiceResult<TDto>> GetByIdAsync(int id)
         {
             var entity = await Repository.GetByIdAsync(id);
+
             if (entity is null)
-                return ServiceResult<TDto>.Failure("Entidad no encontrada", 404);
+                return ServiceResult<TDto>.Failure("Entity not found", 404);
 
             return ServiceResult<TDto>.Success(_mapper.Map<TEntity, TDto>(entity));
         }
@@ -47,7 +49,7 @@ namespace Application.Base
             Repository.Add(entity);
             await _unitOfWork.SaveChangesAsync();
 
-            return ServiceResult<TDto>.Success(_mapper.Map<TEntity, TDto>(entity));
+            return ServiceResult<TDto>.Success(_mapper.Map<TEntity, TDto>(entity), statusCode: 201);
         }
 
         public virtual async Task<ServiceResult<TDto>> UpdateAsync(int id, TUpdateDto dto)
@@ -56,7 +58,7 @@ namespace Application.Base
 
             var entity = await Repository.GetByIdAsync(id);
             if (entity is null)
-                return ServiceResult<TDto>.Failure("Entidad no encontrada", 404);
+                return ServiceResult<TDto>.Failure("Entity not found", 404);
             Repository.Update(entity);
             await _unitOfWork.SaveChangesAsync();
 
@@ -67,11 +69,11 @@ namespace Application.Base
         {
             var entity = await Repository.GetByIdAsync(id);
             if (entity is null)
-                return ServiceResult.Failure("Entidad no encontrada", 404);
+                return ServiceResult.Failure("Entity not found", 404);
             Repository.Delete(entity);
             await _unitOfWork.SaveChangesAsync();
 
-            return ServiceResult.Success();
+            return ServiceResult.Success(statusCode: 204);
         }
 
         protected async Task ValidateAsync<TCUDto>(TCUDto dto)

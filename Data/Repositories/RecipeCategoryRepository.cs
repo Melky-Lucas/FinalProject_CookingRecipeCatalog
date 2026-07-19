@@ -1,9 +1,9 @@
 ﻿using Core.Interfaces.Repositories;
 using Core.Models;
-using Data.Context;
-using Data.Repositories.Generic;
+using Infrastructure.Context;
+using Infrastructure.Repositories.Generic;
 
-namespace Data.Repositories
+namespace Infrastructure.Repositories
 {
     public class RecipeCategoryRepository : GenericRepository<RecipeCategory>, IRecipeCategoryRepository
     {
