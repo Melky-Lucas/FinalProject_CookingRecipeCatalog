@@ -7,6 +7,7 @@ using Core.Interfaces.Repositories;
 using FluentValidation;
 using Infrastructure.Context;
 using Infrastructure.Mapping;
+using Infrastructure.PasswordHasher;
 using Infrastructure.Repositories;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,7 @@ namespace WebAPI.Extensions
 
 
             services.AddScoped<IObjectMapper, AutoMapperAdapter>();
+            services.AddScoped<IPasswordHasher, PasswordHasherAdapter>();
 
             services.AddAutoMapper(cfg =>
                 cfg.AddProfile<MappingProfile>()
