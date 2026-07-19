@@ -2,7 +2,7 @@
 using Core.Models;
 using System.Reflection;
 
-namespace Data.Context
+namespace Infrastructure.Context
 {
     public class RecipeCatalogDBContext : DbContext
     {

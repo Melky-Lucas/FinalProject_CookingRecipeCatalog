@@ -35,8 +35,8 @@ namespace Application.DTOs
         public bool IsPublic { get; set; }
         public int[] Category_Ids { get; set; } = [];
         public ICollection<CreateRecipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
-        public ICollection<CreateCookingStepDTO> CookingSteps { get; set; } = [];
-        public ICollection<CreateTipDTO> Tips { get; set; } = [];
+        public ICollection<CreateRecipeCookingStepDTO> CookingSteps { get; set; } = [];
+        public ICollection<CreateRecipeTipDTO> Tips { get; set; } = [];
     }
 
     public class UpdateRecipeDTO

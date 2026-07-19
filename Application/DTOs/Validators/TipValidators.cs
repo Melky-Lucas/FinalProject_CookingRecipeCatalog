@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.Validators
 {
-    public class CreateTipDTOValidator : AbstractValidator<CreateTipDTO>
+    public class CreateTipDTOValidator : AbstractValidator<CreateRecipeTipDTO>
     {
         public CreateTipDTOValidator()
         {

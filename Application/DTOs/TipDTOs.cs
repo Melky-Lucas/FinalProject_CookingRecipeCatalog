@@ -7,9 +7,8 @@
         public string Content { get; set; } = null!;
     }
 
-    public class CreateTipDTO
+    public class CreateRecipeTipDTO
     {
-        public int RecipeId { get; set; }
         public int UserId { get; set; }
         public string Content { get; set; } = null!;
     }

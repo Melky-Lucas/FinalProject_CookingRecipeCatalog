@@ -1,6 +1,7 @@
 ﻿using Application.Base;
 using Application.Contract;
 using Application.DTOs;
+using Application.Interfaces;
 using Core.Interfaces;
 using Core.Interfaces.Repositories.Generic;
 using Core.Models;
