@@ -2,6 +2,7 @@
 using Core.Models;
 using Infrastructure.Context;
 using Infrastructure.Repositories.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -10,6 +11,11 @@ namespace Infrastructure.Repositories
         public PasswordRepository(RecipeCatalogDBContext context)
             : base(context)
         {
+        }
+
+        public async Task<Password?> GetByUserIdAsync(int userId)
+        {
+            return await _table.FirstOrDefaultAsync(p => p.User.Id == userId);
         }
     }
 }

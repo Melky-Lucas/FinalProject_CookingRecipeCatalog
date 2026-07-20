@@ -32,15 +32,18 @@ namespace WebAPI.Middlewares
         {
             ProblemDetails problemDetails;
             string statusCodeLink = "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status";
+            int statusCode;
 
             switch (exception)
             {
                 case AppValidationException appValidationException:
+                    statusCode = appValidationException.StatusCode;
+
                     problemDetails = new()
                     {
-                        Type = $"{statusCodeLink}/422",
+                        Type = $"{statusCodeLink}/{statusCode}",
                         Title = "Validation Error",
-                        Status = StatusCodes.Status422UnprocessableEntity,
+                        Status = statusCode,
                         Detail = "One or more fields are invalid.",
                         Instance = context.Request.Path,
                         Extensions = ExtractValidationErrors(appValidationException)

@@ -5,5 +5,6 @@ namespace Core.Interfaces.Repositories
 {
     public interface IPasswordRepository : IGenericRepository<Password>
     {
+        Task<Password?> GetByUserIdAsync(int userId);
     }
 }

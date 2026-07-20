@@ -8,7 +8,7 @@ using Core.Models;
 
 namespace Application.Services
 {
-    public class UserService : BaseService<User, ProfileDTO, RegisterUserDTO, UpdateProfileDTO>, IUserService
+    public class UserService : BaseService<User, UserDTO, CreateUserDTO, UpdateUserDTO>, IUserService
     {
         private readonly IPasswordHasher _passwordHasher;
         protected override IGenericRepository<User> Repository => _unitOfWork.Users;
@@ -18,16 +18,16 @@ namespace Application.Services
             _passwordHasher = passwordHasher;
         }
 
-        public override async Task<ServiceResult<ProfileDTO>> CreateAsync(RegisterUserDTO userDTO)
+        public override async Task<ServiceResult<UserDTO>> CreateAsync(CreateUserDTO userDTO)
         {
             var hashedPassword = _passwordHasher.Hash(userDTO.Password);
-            var user = _mapper.Map<RegisterUserDTO, User>(userDTO);
+            var user = _mapper.Map<CreateUserDTO, User>(userDTO);
             user.Password.PasswordHash = hashedPassword;
 
             Repository.Add(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return ServiceResult<ProfileDTO>.Success(_mapper.Map<User, ProfileDTO>(user), "User created successfully", 201);
+            return ServiceResult<UserDTO>.Success(_mapper.Map<User, UserDTO>(user), "User created successfully", 201);
         }
     }
 }

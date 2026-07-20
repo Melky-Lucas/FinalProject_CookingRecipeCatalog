@@ -5,6 +5,7 @@ using Application.Services;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
 using FluentValidation;
+using Infrastructure.Auth;
 using Infrastructure.Context;
 using Infrastructure.Mapping;
 using Infrastructure.PasswordHasher;
@@ -20,6 +21,8 @@ namespace WebAPI.Extensions
         {
             services.AddValidatorsFromAssemblyContaining<CreateRecipeDTOValidator>();
             services.AddScoped<IRecipeService, RecipeService>();
+
+            services.AddScoped<IAuthService, AuthService>();
 
             return services;
         }
@@ -41,6 +44,8 @@ namespace WebAPI.Extensions
 
             services.AddScoped<IObjectMapper, AutoMapperAdapter>();
             services.AddScoped<IPasswordHasher, PasswordHasherAdapter>();
+            services.AddScoped<ITokenGenerator, TokenGeneratorAdapter>();
+
 
             services.AddAutoMapper(cfg =>
                 cfg.AddProfile<MappingProfile>()
