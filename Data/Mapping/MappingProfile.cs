@@ -41,9 +41,10 @@ namespace Infrastructure.Mapping
             CreateMap<CreateIngredientCategoryDTO, IngredientCategory>();
             CreateMap<UpdateIngredientCategoryDTO, IngredientCategory>();
 
-            CreateMap<ProfileDTO, User>();
+            CreateMap<UserDTO, User>();
+            CreateMap<CreateUserDTO, User>();
+            CreateMap<UpdateUserDTO, User>();
             CreateMap<RegisterUserDTO, User>();
-            CreateMap<UpdateProfileDTO, User>();
 
             CreateMap<RoleDTO, Role>();
             CreateMap<CreateRoleDTO, Role>();
