@@ -1,10 +1,12 @@
 ﻿using Application.Contract;
 using Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ApiBaseController
@@ -16,6 +18,7 @@ namespace WebAPI.Controllers
             _roleService = roleService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

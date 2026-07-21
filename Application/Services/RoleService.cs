@@ -11,8 +11,8 @@ namespace Application.Services
     public class RoleService : BaseService<Role, RoleDTO, CreateRoleDTO, UpdateRoleDTO>, IRoleService
     {
         protected override IGenericRepository<Role> Repository => _unitOfWork.Roles;
-        public RoleService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider) 
-           : base(unitOfWork, objectMapper, serviceProvider)
+        public RoleService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider, IApplicationValidator validator) 
+           : base(unitOfWork, objectMapper, serviceProvider, validator)
         {
 
         }

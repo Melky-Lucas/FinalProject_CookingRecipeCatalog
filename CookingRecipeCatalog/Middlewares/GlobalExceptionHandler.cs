@@ -1,6 +1,7 @@
 ﻿using Application.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Models;
 
 namespace WebAPI.Middlewares
 {
@@ -21,34 +22,39 @@ namespace WebAPI.Middlewares
             var problemDetails = await MapExceptionAsync(httpContext, exception);
 
             httpContext.Response.ContentType = "application/problem+json";
-            httpContext.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status418ImATeapot;
+            httpContext.Response.StatusCode = problemDetails.Status;
 
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
             return true;
         }
 
-        private async Task<ProblemDetails> MapExceptionAsync(HttpContext context, Exception exception)
+        private async Task<CustomProblemDetails> MapExceptionAsync(HttpContext context, Exception exception)
         {
-            ProblemDetails problemDetails;
+            CustomProblemDetails problemDetails;
             string statusCodeLink = "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status";
+            int statusCode;
 
             switch (exception)
             {
                 case AppValidationException appValidationException:
+                    statusCode = appValidationException.StatusCode;
+
                     problemDetails = new()
                     {
-                        Type = $"{statusCodeLink}/422",
+                        Type = $"{statusCodeLink}/{statusCode}",
                         Title = "Validation Error",
-                        Status = StatusCodes.Status422UnprocessableEntity,
-                        Detail = "One or more fields are invalid.",
+                        Status = statusCode,
+                        Detail = exception.Message,
                         Instance = context.Request.Path,
-                        Extensions = ExtractValidationErrors(appValidationException)
+                        TraceId = context.TraceIdentifier,
+                        Timestamp = DateTime.UtcNow,
+                        Errors = ExtractValidationErrors(appValidationException)
                     };
                     break;
 
                 default:
-                    problemDetails = new ProblemDetails
+                    problemDetails = new CustomProblemDetails
                     {
                         Type = $"{statusCodeLink}/500",
                         Title = "Internal Server Error",
@@ -57,6 +63,8 @@ namespace WebAPI.Middlewares
                             ? exception.Message
                             : "Critic error occurred in the server. Please contact the app admin.",
                         Instance = context.Request.Path,
+                        TraceId = context.TraceIdentifier,
+                        Timestamp = DateTime.UtcNow
                     };
 
                     _logger.LogError(exception, "Error 500: {Message}\nStackTrace: {StackTrace}",
@@ -67,9 +75,9 @@ namespace WebAPI.Middlewares
             return problemDetails;
         }
 
-        private static IDictionary<string, object?> ExtractValidationErrors(AppValidationException validationException)
+        private static Dictionary<string, string[]> ExtractValidationErrors(AppValidationException validationException)
         {
-            IDictionary<string, object?> errors = new Dictionary<string, object?>();
+            Dictionary<string, string[]> errors = new Dictionary<string, string[]>();
 
             foreach (var error in validationException.Errors)
             {

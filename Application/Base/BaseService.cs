@@ -1,27 +1,28 @@
-﻿using Application.Exceptions;
+﻿using Application.Contract;
+using Application.Exceptions;
 using Application.Interfaces;
 using Core.Base;
 using Core.Interfaces;
 using Core.Interfaces.Repositories.Generic;
-using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Base
 {
-    public abstract class BaseService<TEntity, TDto, TCreateDto, TUpdateDto>
+    public abstract class BaseService<TEntity, TDto, TCreateDto, TUpdateDto> 
         : IBaseService<TDto, TCreateDto, TUpdateDto>
-        where TEntity : BaseEntity
+          where TEntity : BaseEntity
     {
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IObjectMapper _mapper;
         protected readonly IServiceProvider _serviceProvider;
+        protected readonly IApplicationValidator _validator;
         protected abstract IGenericRepository<TEntity> Repository { get; }
 
-        protected BaseService(IUnitOfWork unitOfWork, IObjectMapper mapper, IServiceProvider serviceProvider)
+        protected BaseService(IUnitOfWork unitOfWork, IObjectMapper mapper, IServiceProvider serviceProvider, IApplicationValidator Validator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _serviceProvider = serviceProvider;
+            _validator = Validator;
         }
 
         public virtual async Task<ServiceResult<IEnumerable<TDto>>> GetAllAsync()
@@ -43,7 +44,7 @@ namespace Application.Base
 
         public virtual async Task<ServiceResult<TDto>> CreateAsync(TCreateDto dto)
         {
-            await ValidateAsync(dto);
+            await _validator.ValidateAsync(dto);
 
             var entity = _mapper.Map<TCreateDto, TEntity>(dto);
             Repository.Add(entity);
@@ -54,7 +55,7 @@ namespace Application.Base
 
         public virtual async Task<ServiceResult<TDto>> UpdateAsync(int id, TUpdateDto dto)
         {
-            await ValidateAsync(dto);
+            await _validator.ValidateAsync(dto);
 
             var entity = await Repository.GetByIdAsync(id);
             if (entity is null)
@@ -74,21 +75,6 @@ namespace Application.Base
             await _unitOfWork.SaveChangesAsync();
 
             return ServiceResult.Success(statusCode: 204);
-        }
-
-        protected async Task ValidateAsync<TCUDto>(TCUDto dto)
-        {
-            var validator = _serviceProvider.GetService<IValidator<TCUDto>>();
-
-            if (validator == null)
-                return;
-            
-            var validationResult = await validator.ValidateAsync(dto);
-
-            if (!validationResult.IsValid)
-            {
-                throw new AppValidationException(validationResult.Errors);
-            }
         }
     }
 }

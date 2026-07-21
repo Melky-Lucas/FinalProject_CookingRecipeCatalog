@@ -10,12 +10,10 @@ namespace Infrastructure.DbConfiguration
         {
             builder.Property(p => p.PasswordHash).HasMaxLength(255);
 
-            builder.Property(p => p.Salt).HasMaxLength(255);
-
             // Relationships
             builder.HasOne(p => p.User)
                    .WithOne(u => u.Password)
-                   .HasForeignKey<Password>(p => p.Id)
+                   .HasForeignKey<User>(u => u.PasswordId)
                    .OnDelete(DeleteBehavior.Cascade);
         }
     }

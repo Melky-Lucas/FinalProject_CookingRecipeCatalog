@@ -8,13 +8,28 @@ using Core.Models;
 
 namespace Application.Services
 {
-    public class UserService : BaseService<User, ProfileDTO, RegisterUserDTO, UpdateProfileDTO>, IUserService
+    public class UserService : BaseService<User, UserDTO, CreateUserDTO, UpdateUserDTO>, IUserService
     {
+        private readonly IPasswordHasher _passwordHasher;
         protected override IGenericRepository<User> Repository => _unitOfWork.Users;
-        public UserService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider)
-            : base(unitOfWork, objectMapper, serviceProvider)
+        public UserService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider, IPasswordHasher passwordHasher, IApplicationValidator validator)
+            : base(unitOfWork, objectMapper, serviceProvider, validator)
         {
+            _passwordHasher = passwordHasher;
+        }
 
+        public override async Task<ServiceResult<UserDTO>> CreateAsync(CreateUserDTO userDTO)
+        {
+            await _validator.ValidateAsync(userDTO);
+
+            var hashedPassword = _passwordHasher.Hash(userDTO.Password);
+            var user = _mapper.Map<CreateUserDTO, User>(userDTO);
+            user.Password.PasswordHash = hashedPassword;
+
+            Repository.Add(user);
+            await _unitOfWork.SaveChangesAsync();
+
+            return ServiceResult<UserDTO>.Success(_mapper.Map<User, UserDTO>(user), "User created successfully", 201);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Core.Models;
 using Infrastructure.Context;
 using Infrastructure.Repositories.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {

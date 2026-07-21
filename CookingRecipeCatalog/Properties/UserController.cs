@@ -29,13 +29,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(RegisterUserDTO userDTO)
+        public async Task<IActionResult> Create(CreateUserDTO userDTO)
         {
             return HandleResult(await _userService.CreateAsync(userDTO));
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, UpdateProfileDTO userDTO)
+        public async Task<IActionResult> Update(int id, UpdateUserDTO userDTO)
         {
             return HandleResult(await _userService.UpdateAsync(id, userDTO));
         }

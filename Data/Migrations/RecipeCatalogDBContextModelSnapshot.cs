@@ -53,7 +53,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("CookingSteps", (string)null);
+                    b.ToTable("CookingSteps");
                 });
 
             modelBuilder.Entity("Core.Models.Ingredient", b =>
@@ -86,7 +86,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("IngredientCategoryId");
 
-                    b.ToTable("Ingredients", (string)null);
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("Core.Models.IngredientCategory", b =>
@@ -109,7 +109,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IngredientCategories", (string)null);
+                    b.ToTable("IngredientCategories");
                 });
 
             modelBuilder.Entity("Core.Models.MeasureUnit", b =>
@@ -132,20 +132,18 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MeasureUnits", (string)null);
+                    b.ToTable("MeasureUnits");
                 });
 
             modelBuilder.Entity("Core.Models.Password", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Salt")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -155,7 +153,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Passwords", (string)null);
+                    b.ToTable("Passwords");
                 });
 
             modelBuilder.Entity("Core.Models.Recipe", b =>
@@ -208,7 +206,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("Core.Models.RecipeCategory", b =>
@@ -231,7 +229,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RecipeCategories", (string)null);
+                    b.ToTable("RecipeCategories");
                 });
 
             modelBuilder.Entity("Core.Models.Recipe_Category", b =>
@@ -246,7 +244,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Recipe_Categories", (string)null);
+                    b.ToTable("Recipe_Categories");
                 });
 
             modelBuilder.Entity("Core.Models.Recipe_Ingredient", b =>
@@ -280,7 +278,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Recipe_Ingredients", (string)null);
+                    b.ToTable("Recipe_Ingredients");
                 });
 
             modelBuilder.Entity("Core.Models.Role", b =>
@@ -298,7 +296,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Core.Models.Tip", b =>
@@ -326,7 +324,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tips", (string)null);
+                    b.ToTable("Tips");
                 });
 
             modelBuilder.Entity("Core.Models.User", b =>
@@ -355,9 +353,12 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PasswordId")
+                        .IsUnique();
+
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Core.Models.CookingStep", b =>
@@ -379,17 +380,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("IngredientCategory");
-                });
-
-            modelBuilder.Entity("Core.Models.Password", b =>
-                {
-                    b.HasOne("Core.Models.User", "User")
-                        .WithOne("Password")
-                        .HasForeignKey("Core.Models.Password", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Models.Recipe", b =>
@@ -470,11 +460,19 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
+                    b.HasOne("Core.Models.Password", "Password")
+                        .WithOne("User")
+                        .HasForeignKey("Core.Models.User", "PasswordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Core.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Password");
 
                     b.Navigation("Role");
                 });
@@ -492,6 +490,12 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Models.MeasureUnit", b =>
                 {
                     b.Navigation("Recipe_Ingredients");
+                });
+
+            modelBuilder.Entity("Core.Models.Password", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Models.Recipe", b =>
@@ -517,9 +521,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
-                    b.Navigation("Password")
-                        .IsRequired();
-
                     b.Navigation("Recipes");
 
                     b.Navigation("Tips");
