@@ -12,8 +12,8 @@ namespace Infrastructure.Auth
     {
         private readonly IJWTSettings _settings;
 
-        public TokenGeneratorAdapter(IOptions<IJWTSettings> settings)
-            => _settings = settings.Value;
+        public TokenGeneratorAdapter(IJWTSettings settings)
+            => _settings = settings;
 
         public string GenerateToken(User user)
         {
@@ -22,7 +22,7 @@ namespace Infrastructure.Auth
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new(JwtRegisteredClaimNames.Email, user.Email),
             new(ClaimTypes.Name, user.Username),
-            new(ClaimTypes.Role, user.Role.Name),
+            new(ClaimTypes.Role, user.Role.Name)
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));

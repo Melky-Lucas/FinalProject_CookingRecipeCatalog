@@ -13,7 +13,7 @@ namespace Infrastructure.DbConfiguration
             // Relationships
             builder.HasOne(p => p.User)
                    .WithOne(u => u.Password)
-                   .HasForeignKey<Password>(p => p.Id)
+                   .HasForeignKey<User>(u => u.PasswordId)
                    .OnDelete(DeleteBehavior.Cascade);
         }
     }

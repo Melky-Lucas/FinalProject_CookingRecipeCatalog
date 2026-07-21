@@ -23,6 +23,7 @@ namespace WebAPI.Extensions
             services.AddScoped<IRecipeService, RecipeService>();
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddTransient<IApplicationValidator, ApplicationValidator>();
 
             return services;
         }
@@ -43,8 +44,8 @@ namespace WebAPI.Extensions
 
 
             services.AddScoped<IObjectMapper, AutoMapperAdapter>();
-            services.AddScoped<IPasswordHasher, PasswordHasherAdapter>();
-            services.AddScoped<ITokenGenerator, TokenGeneratorAdapter>();
+            services.AddTransient<IPasswordHasher, PasswordHasherAdapter>();
+            services.AddSingleton<ITokenGenerator, TokenGeneratorAdapter>();
 
 
             services.AddAutoMapper(cfg =>
