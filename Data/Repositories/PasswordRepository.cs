@@ -12,10 +12,5 @@ namespace Infrastructure.Repositories
             : base(context)
         {
         }
-
-        public async Task<Password?> GetByUserIdAsync(int userId)
-        {
-            return await _table.FirstOrDefaultAsync(p => p.User.Id == userId);
-        }
     }
 }

@@ -138,7 +138,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Models.Password", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -350,6 +353,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PasswordId")
+                        .IsUnique();
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
@@ -374,17 +380,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("IngredientCategory");
-                });
-
-            modelBuilder.Entity("Core.Models.Password", b =>
-                {
-                    b.HasOne("Core.Models.User", "User")
-                        .WithOne("Password")
-                        .HasForeignKey("Core.Models.Password", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Models.Recipe", b =>
@@ -465,11 +460,19 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
+                    b.HasOne("Core.Models.Password", "Password")
+                        .WithOne("User")
+                        .HasForeignKey("Core.Models.User", "PasswordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Core.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Password");
 
                     b.Navigation("Role");
                 });
@@ -487,6 +490,12 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Models.MeasureUnit", b =>
                 {
                     b.Navigation("Recipe_Ingredients");
+                });
+
+            modelBuilder.Entity("Core.Models.Password", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Models.Recipe", b =>
@@ -512,9 +521,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
-                    b.Navigation("Password")
-                        .IsRequired();
-
                     b.Navigation("Recipes");
 
                     b.Navigation("Tips");
