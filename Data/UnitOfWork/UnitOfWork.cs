@@ -16,7 +16,6 @@ namespace Infrastructure.UnitOfWork
         private ITipRepository? _tipRepository;
         private IIngredientCategoryRepository? _ingredientCategoryRepository;
         private IRecipeCategoryRepository? _recipeCategoryRepository;
-        private IRecipe_CategoryRepository? _recipe_CategoryRepository;
         private IRecipe_IngredientRepository? _recipe_IngredientRepository;
         private IPasswordRepository? _passwordRepository;
         private IMeasureUnitRepository? _measureUnitRepository;
@@ -40,8 +39,6 @@ namespace Infrastructure.UnitOfWork
         public ITipRepository Tips => _tipRepository ??= new TipRepository(_context);
 
         public IRecipeCategoryRepository RecipeCategories => _recipeCategoryRepository ??= new RecipeCategoryRepository(_context);
-
-        public IRecipe_CategoryRepository Recipe_Category => _recipe_CategoryRepository ??= new Recipe_CategoryRepository(_context);
 
         public IRecipe_IngredientRepository Recipe_Ingredients => _recipe_IngredientRepository ??= new Recipe_IngredientRepository(_context);
 

@@ -27,13 +27,10 @@ namespace Application.Services
 
         public async Task<AuthResponseDTO> LoginAsync(LoginDTO dto)
         {
-            var user = await _unitOfWork.Users.GetByEmailWithRoleAsync(dto.Email)
+            var user = await _unitOfWork.Users.GetByEmailAsync(dto.Email)
                 ?? throw new UnauthorizedException("Invalid credentials.");
 
-            var userPasswordHash = await _unitOfWork.Passwords.GetByIdAsync(user.PasswordId)
-                ?? throw new UnauthorizedException("Invalid credentials.");
-
-            var IsValid = _passwordHasher.Verify(dto.Password, userPasswordHash.PasswordHash);
+            var IsValid = _passwordHasher.Verify(dto.Password, user.Password.PasswordHash);
 
             if (!IsValid)
                 throw new UnauthorizedException("Invalid credentials.");

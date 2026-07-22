@@ -13,16 +13,20 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<User?> GetByEmailWithRoleAsync(string email)
+        public async Task<User?> GetByEmailAsync(string email)
         {
             return await _table
-                .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<bool> HasEmailAsync(string email)
         {
             return await _table.AnyAsync(u => u.Email == email);
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await _table.AnyAsync(u => u.Id == id);
         }
     }
 }

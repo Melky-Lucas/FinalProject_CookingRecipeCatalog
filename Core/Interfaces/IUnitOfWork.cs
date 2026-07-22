@@ -10,7 +10,6 @@ namespace Core.Interfaces
         ICookingStepRepository CookingSteps { get; }
         ITipRepository Tips { get; }
         IRecipeCategoryRepository RecipeCategories { get; }
-        IRecipe_CategoryRepository Recipe_Category { get; }
         IRecipe_IngredientRepository Recipe_Ingredients { get; }
         IIngredientCategoryRepository IngredientCategories { get; }
         IPasswordRepository Passwords { get; }

@@ -20,10 +20,19 @@ namespace WebAPI.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddValidatorsFromAssemblyContaining<CreateRecipeDTOValidator>();
-            services.AddScoped<IRecipeService, RecipeService>();
-
-            services.AddScoped<IAuthService, AuthService>();
             services.AddTransient<IApplicationValidator, ApplicationValidator>();
+
+            // Services
+            services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IRecipeCategoryService, RecipeCategoryService>();
+            services.AddScoped<IRecipe_IngredientService, Recipe_IngredientService>();
+            services.AddScoped<IIngredientCategoryService, IngredientCategoryService>();
+            services.AddScoped<IIngredientService, IngredientService>();
+            services.AddScoped<ICookingStepService, CookingStepService>();
+            services.AddScoped<ITipService, TipService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             return services;
         }
@@ -31,6 +40,7 @@ namespace WebAPI.Extensions
         public static IServiceCollection AddInfrastructureServices(
             this IServiceCollection services, IConfiguration config)
         {
+            // DBContext
             services.AddDbContext<RecipeCatalogDBContext>(o =>
                 o.UseSqlServer(config.GetConnectionString("Database")));
 
@@ -39,10 +49,19 @@ namespace WebAPI.Extensions
             // Repositories
             services.AddScoped<IRecipeCategoryRepository, RecipeCategoryRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddScoped<IRecipeCategoryRepository, RecipeCategoryRepository>();
+            services.AddScoped<IRecipe_IngredientRepository, Recipe_IngredientRepository>();
+            services.AddScoped<IIngredientCategoryRepository, IngredientCategoryRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+            services.AddScoped<ICookingStepRepository, CookingStepRepository>();
+            services.AddScoped<ITipRepository, TipRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IPasswordRepository, PasswordRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
+            // Adapters
             services.AddScoped<IObjectMapper, AutoMapperAdapter>();
             services.AddTransient<IPasswordHasher, PasswordHasherAdapter>();
             services.AddSingleton<ITokenGenerator, TokenGeneratorAdapter>();

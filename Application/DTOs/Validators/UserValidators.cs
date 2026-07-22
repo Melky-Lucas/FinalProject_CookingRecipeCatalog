@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿using Core.Interfaces.Repositories;
+using FluentValidation;
 
 namespace Application.DTOs.Validators
 {
     public class CreateUserDTOValidator : AbstractValidator<CreateUserDTO>
     {
-        public CreateUserDTOValidator()
+        public CreateUserDTOValidator(IUserRepository repo)
         {
             RuleFor(x => x.Username)
                 .NotEmpty().WithMessage("Username is required.")
@@ -14,7 +15,12 @@ namespace Application.DTOs.Validators
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email is required.")
                 .EmailAddress().WithMessage("Invalid email format.")
-                .MaximumLength(100).WithMessage("Email cannot exceed 100 characters.");
+                .MaximumLength(100).WithMessage("Email cannot exceed 100 characters.")
+                .MustAsync(async (email, cancellation) =>
+                {
+                    bool HasEmail = await repo.HasEmailAsync(email);
+                    return !HasEmail;
+                }).WithMessage("This Email already exists.");
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required.")
@@ -37,11 +43,6 @@ namespace Application.DTOs.Validators
                 .NotEmpty().WithMessage("Username is required.")
                 .MinimumLength(3).WithMessage("Username must be at least 3 characters long.")
                 .MaximumLength(50).WithMessage("Username cannot exceed 50 characters.");
-
-            RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Email is required.")
-                .EmailAddress().WithMessage("Invalid email format.")
-                .MaximumLength(100).WithMessage("Email cannot exceed 100 characters.");
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required.")

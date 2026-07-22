@@ -1,9 +1,10 @@
-﻿using Core.Interfaces.Repositories.Generic;
+﻿using Core.Base;
+using Core.Interfaces.Repositories.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Generic
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+    public abstract class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         protected readonly DbContext _context;
         protected readonly DbSet<T> _table;
@@ -31,15 +32,22 @@ namespace Infrastructure.Repositories.Generic
                 await _table.AsNoTracking().ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(object id)
+        public async Task<T?> GetByIdAsync(int id, bool trackChanges = true)
         {
-            return await _table.FindAsync(id);
+            return trackChanges ?
+                await _table.FindAsync(id) :
+                await _table.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public void Update(T entity)
         {
             _table.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _table.AnyAsync(e => e.Id == id);
         }
     }
 }
