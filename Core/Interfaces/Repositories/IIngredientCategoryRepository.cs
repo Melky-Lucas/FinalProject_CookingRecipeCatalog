@@ -5,5 +5,6 @@ namespace Core.Interfaces.Repositories
 {
     public interface IIngredientCategoryRepository : IGenericRepository<IngredientCategory>
     {
+        Task<bool> HasNameAsync(string name);
     }
 }

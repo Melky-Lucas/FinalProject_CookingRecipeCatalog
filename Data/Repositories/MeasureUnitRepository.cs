@@ -2,6 +2,7 @@
 using Core.Models;
 using Infrastructure.Context;
 using Infrastructure.Repositories.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -10,6 +11,16 @@ namespace Infrastructure.Repositories
         public MeasureUnitRepository(RecipeCatalogDBContext context)
             : base(context)
         {
+        }
+
+        public async Task<bool> HasAbbAsync(string abb)
+        {
+            return await _table.AnyAsync(a => a.Abbreviation == abb);
+        }
+
+        public async Task<bool> HasNameAsync(string name)
+        {
+            return await _table.AnyAsync(a => a.Name == name);
         }
     }
 }
