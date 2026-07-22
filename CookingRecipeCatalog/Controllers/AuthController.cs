@@ -21,7 +21,6 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> Register(RegisterUserDTO dto)
             => Ok(await _authService.RegisterAsync(dto));
 
-        [Authorize(Roles = "Admin")]
         [HttpPost("register/admin")]
         public async Task<IActionResult> RegisterAdmin(RegisterUserDTO dto)
             => Ok(await _authService.RegisterAsync(dto, isAdmin: true));

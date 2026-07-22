@@ -1,10 +1,12 @@
 ﻿using Application.Contract;
 using Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class IngredientController : ApiBaseController
@@ -16,12 +18,14 @@ namespace WebAPI.Controllers
             _ingredientService = ingredientService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return HandleResult(await _ingredientService.GetAllAsync());
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {

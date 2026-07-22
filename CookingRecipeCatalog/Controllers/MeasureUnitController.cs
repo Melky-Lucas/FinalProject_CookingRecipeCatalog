@@ -1,10 +1,12 @@
 ﻿using Application.Contract;
 using Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Controllers.Base;
 
 namespace WebAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class MeasureUnitController : ApiBaseController
@@ -16,12 +18,14 @@ namespace WebAPI.Controllers
             _measureUnitService = measureUnitService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return HandleResult(await _measureUnitService.GetAllAsync());
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {

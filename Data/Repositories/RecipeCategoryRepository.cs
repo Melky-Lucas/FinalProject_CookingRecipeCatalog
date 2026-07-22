@@ -2,6 +2,7 @@
 using Core.Models;
 using Infrastructure.Context;
 using Infrastructure.Repositories.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -11,6 +12,11 @@ namespace Infrastructure.Repositories
             : base(context)
         {
             
+        }
+
+        public async Task<bool> HasNameAsync(string name)
+        {
+            return await _table.AnyAsync(t => t.Name == name);
         }
     }
 }

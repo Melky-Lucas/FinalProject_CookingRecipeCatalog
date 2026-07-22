@@ -14,6 +14,9 @@ namespace Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().Navigation(u => u.Password).AutoInclude();
+            modelBuilder.Entity<User>().Navigation(u => u.Role).AutoInclude();
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 

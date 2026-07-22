@@ -1,5 +1,4 @@
 ﻿using Application.Contract;
-using Application.Exceptions;
 using Application.Interfaces;
 using Core.Base;
 using Core.Interfaces;
@@ -57,9 +56,12 @@ namespace Application.Base
         {
             await _validator.ValidateAsync(dto);
 
-            var entity = await Repository.GetByIdAsync(id);
-            if (entity is null)
+            if (!await Repository.ExistsAsync(id))
                 return ServiceResult<TDto>.Failure("Entity not found", 404);
+
+            TEntity entity = _mapper.Map<TUpdateDto, TEntity>(dto);
+            entity.Id = id;
+
             Repository.Update(entity);
             await _unitOfWork.SaveChangesAsync();
 
