@@ -35,13 +35,13 @@ namespace Application.Services
                     throw new ConflictException("This recipe name is already being used");
             }
 
-            var entity = _mapper.Map<UpdateRecipeCategoryDTO, RecipeCategory>(dto);
-            entity.Id = id;
+            var newCategory = _mapper.Map<UpdateRecipeCategoryDTO, RecipeCategory>(dto);
+            newCategory.Id = id;
 
-            Repository.Update(entity);
+            Repository.Update(newCategory);
             await _unitOfWork.SaveChangesAsync();
 
-            return ServiceResult<RecipeCategoryDTO>.Success(_mapper.Map<RecipeCategory, RecipeCategoryDTO>(entity));
+            return ServiceResult<RecipeCategoryDTO>.Success(_mapper.Map<RecipeCategory, RecipeCategoryDTO>(newCategory));
         }
     }
 }

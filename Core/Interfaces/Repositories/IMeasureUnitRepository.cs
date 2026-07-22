@@ -5,5 +5,7 @@ namespace Core.Interfaces.Repositories
 {
     public interface IMeasureUnitRepository : IGenericRepository<MeasureUnit>
     {
+        Task<bool> HasNameAsync(string name);
+        Task<bool> HasAbbAsync(string abb);
     }
 }

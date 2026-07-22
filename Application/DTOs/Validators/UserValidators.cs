@@ -7,12 +7,12 @@ namespace Application.DTOs.Validators
     {
         public CreateUserDTOValidator(IUserRepository repo)
         {
-            RuleFor(x => x.Username)
+            RuleFor(x => x.Username.Trim())
                 .NotEmpty().WithMessage("Username is required.")
                 .MinimumLength(3).WithMessage("Username must be at least 3 characters long.")
                 .MaximumLength(50).WithMessage("Username cannot exceed 50 characters.");
 
-            RuleFor(x => x.Email)
+            RuleFor(x => x.Email.Trim())
                 .NotEmpty().WithMessage("Email is required.")
                 .EmailAddress().WithMessage("Invalid email format.")
                 .MaximumLength(100).WithMessage("Email cannot exceed 100 characters.")
@@ -39,12 +39,12 @@ namespace Application.DTOs.Validators
             RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than zero.");
 
-            RuleFor(x => x.Username)
+            RuleFor(x => x.Username.Trim())
                 .NotEmpty().WithMessage("Username is required.")
                 .MinimumLength(3).WithMessage("Username must be at least 3 characters long.")
                 .MaximumLength(50).WithMessage("Username cannot exceed 50 characters.");
 
-            RuleFor(x => x.Password)
+            RuleFor(x => x.Password.Trim())
                 .NotEmpty().WithMessage("Password is required.")
                 .MinimumLength(6).WithMessage("Password must be at least 6 characters long.")
                 .MaximumLength(20).WithMessage("Password cannot exceed 20 characters.");
