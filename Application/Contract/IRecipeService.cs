@@ -5,6 +5,7 @@ namespace Application.Contract
 {
     public interface IRecipeService : IBaseService<RecipeDTO, CreateRecipeDTO, UpdateRecipeDTO>
     {
+        Task<ServiceResult<IEnumerable<RecipeDTO>>> GetAllByQueryAsync(RecipeSearchQuery query);
         Task<ServiceResult> UpdateRecipeStepsAsync(int recipeId, ICollection<UpdateRecipeStepDTO> dto);
         Task<ServiceResult> AddRecipeCategoryAsync(int recipeId, int categoryId);
         Task<ServiceResult> RemoveRecipeCategoryAsync(int recipeId, int categoryId);

@@ -18,6 +18,16 @@ namespace Application.Services
         {
         }
 
+        public async Task<ServiceResult<IEnumerable<RecipeDTO>>> GetAllByQueryAsync (RecipeSearchQuery query)
+        {
+            var recipes = await _unitOfWork.Recipes.GetAllByQueryAsync(query.Title, query.UserId, query.CategoryIds, query.RequiredIngredientIds,
+                query.OptionalIngredientIds, query.ExcludedIngredientIds, query.PageSize, query.PageNumber);
+
+            var dtos = recipes.Select(r => _mapper.Map<Recipe, RecipeDTO>(r));
+
+            return ServiceResult<IEnumerable<RecipeDTO>>.Success(dtos);
+        }
+
         public override async Task<ServiceResult<RecipeDTO>> CreateAsync(CreateRecipeDTO dto)
         {
             await _validator.ValidateAsync(dto);
