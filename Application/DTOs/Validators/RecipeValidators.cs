@@ -1,21 +1,32 @@
-﻿using FluentValidation;
+﻿using Core.Interfaces.Repositories;
+using FluentValidation;
 
 namespace Application.DTOs.Validators
 {
     public class CreateRecipeDTOValidator : AbstractValidator<CreateRecipeDTO>
     {
-        public CreateRecipeDTOValidator()
+        public CreateRecipeDTOValidator(IRecipeRepository repo)
         {
             RuleFor(x => x.Title)
-                .NotEmpty().WithMessage("Name is required.")
-                .MaximumLength(100).WithMessage("Name cannot exceed 100 characters.");
+                .NotEmpty().WithMessage("Title is required.")
+                .MinimumLength(3).WithMessage("Title must be at least 3 characters long.")
+                .MaximumLength(100).WithMessage("Title cannot exceed 100 characters.")
+                .MustAsync(async (title, cancellation) =>
+                {
+                    return !await repo.HasTitleAsync(title);
+                }).WithMessage("This Title already exists.");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Desription is required.")
                 .MaximumLength(250).WithMessage("Description cannot exceed 250 characters.");
 
             RuleFor(x => x.ImageUrl)
-                .MaximumLength(250).WithMessage("ImageURL cannot exceed 250 characters.");
+                .NotEmpty().WithMessage("ImageURL is required.")
+                .MaximumLength(250).WithMessage("ImageURL cannot exceed 250 characters.")
+                .MustAsync(async (url, cancellation) =>
+                {
+                    return !await repo.HasImageURLAsync(url);
+                }).WithMessage("This ImageURL already exists.");
 
             RuleFor(x => x.PreparationTime)
                 .GreaterThan(TimeSpan.Zero).WithMessage("Preparation time must be greater than zero.");
@@ -57,8 +68,9 @@ namespace Application.DTOs.Validators
                     .GreaterThan(0).WithMessage("Id must be greater than zero.");
 
                 RuleFor(x => x.Title)
-                    .NotEmpty().WithMessage("Name is required.")
-                    .MaximumLength(100).WithMessage("Name cannot exceed 100 characters.");
+                    .NotEmpty().WithMessage("Title is required.")
+                    .MinimumLength(3).WithMessage("Title must be at least 3 characters long.")
+                    .MaximumLength(100).WithMessage("Title cannot exceed 100 characters.");
 
                 RuleFor(x => x.Description)
                     .NotEmpty().WithMessage("Desription is required.")
@@ -78,14 +90,6 @@ namespace Application.DTOs.Validators
 
                 RuleFor(x => x.Calories)
                     .GreaterThanOrEqualTo(0).WithMessage("Calories must be greater than or equal to zero.");
-
-                RuleFor(x => x.Category_Ids)
-                    .NotNull().WithMessage("Category IDs cannot be null.")
-                    .Must(ids => ids.All(id => id > 0)).WithMessage("All Category IDs must be greater than zero.");
-
-                RuleForEach(x => x.Recipe_Ingredients)
-                    .NotNull().WithMessage("Recipe ingredients cannot be null.")
-                    .SetValidator(new UpdateRecipe_IngredientDTOValidator());
             }
 
         }

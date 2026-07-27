@@ -10,7 +10,7 @@
 
     }
 
-    public class CreateRecipeCookingStepDTO
+    public class CreateRecipeStepDTO
     {
         public int StepNumber { get; set; }
         public string Title { get; set; } = null!;
@@ -18,7 +18,7 @@
         public string Instruction { get; set; } = null!;
     }
 
-    public class UpdateCookingStepDTO
+    public class UpdateRecipeStepDTO
     {
         public int Id { get; set; }
         public int StepNumber { get; set; }

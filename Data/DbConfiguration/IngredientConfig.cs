@@ -8,8 +8,11 @@ namespace Infrastructure.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<Ingredient> builder)
         {
-            builder.HasIndex(i => i.Name).IsUnique();
-            builder.HasIndex(i => i.ImageUrl).IsUnique();
+            builder.HasIndex(i => i.Name)
+                .IsUnique();
+
+            builder.HasIndex(i => i.ImageUrl)
+                .IsUnique();
 
             builder.Property(i => i.Name).HasMaxLength(100);
 

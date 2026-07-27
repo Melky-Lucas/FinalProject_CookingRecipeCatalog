@@ -1,6 +1,7 @@
 ﻿using Application.Base;
 using Application.Contract;
 using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using Core.Interfaces;
 using Core.Interfaces.Repositories.Generic;
@@ -15,6 +16,21 @@ namespace Application.Services
             : base(unitOfWork, objectMapper, serviceProvider, validator)
         {
 
+        }
+
+        public override async Task<ServiceResult<IngredientDTO>> CreateAsync(CreateIngredientDTO dto)
+        {
+            await _validator.ValidateAsync(dto);
+
+            var ingredient = _mapper.Map<CreateIngredientDTO, Ingredient>(dto);
+
+            ingredient.IngredientCategory = await _unitOfWork.IngredientCategories.GetByIdAsync(ingredient.IngredientCategoryId)
+                ?? throw new NotFoundException(nameof(Ingredient), ingredient.IngredientCategoryId);
+
+            Repository.Add(ingredient);
+            await _unitOfWork.SaveChangesAsync();
+
+            return ServiceResult<IngredientDTO>.Success(_mapper.Map<Ingredient, IngredientDTO>(ingredient), statusCode: 201);
         }
 
         public override async Task<ServiceResult<IngredientDTO>> UpdateAsync(int id, UpdateIngredientDTO dto)
@@ -40,6 +56,9 @@ namespace Application.Services
 
             Ingredient newIngredient = _mapper.Map<UpdateIngredientDTO, Ingredient>(dto);
             newIngredient.Id = id;
+
+            newIngredient.IngredientCategory = await _unitOfWork.IngredientCategories.GetByIdAsync(newIngredient.IngredientCategoryId)
+                ?? throw new NotFoundException(nameof(Ingredient), newIngredient.IngredientCategoryId);
 
             Repository.Update(newIngredient);
             await _unitOfWork.SaveChangesAsync();

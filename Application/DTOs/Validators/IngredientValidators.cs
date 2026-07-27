@@ -13,9 +13,8 @@ namespace Application.DTOs.Validators
                 .MaximumLength(100).WithMessage("Name cannot exceed 100 characters.")
                 .MustAsync(async (name, cancellation) =>
                 {
-                    bool HasName = await repo.HasNameAsync(name);
-                    return !HasName;
-                });
+                    return !await repo.HasNameAsync(name);
+                }).WithMessage("This Name already exists.");
 
             RuleFor(x => x.Description)
                 .MaximumLength(250).WithMessage("Description cannot exceed 250 characters.");
@@ -25,9 +24,8 @@ namespace Application.DTOs.Validators
                 .MaximumLength(250).WithMessage("ImageURL cannot exceed 250 characters.")
                 .MustAsync(async (url, cancellation) =>
                 {
-                    bool HasImageUrl = await repo.HasImageURLAsync(url);
-                    return !HasImageUrl;
-                });
+                    return !await repo.HasImageURLAsync(url);
+                }).WithMessage("This ImageURL already exists.");
 
             RuleFor(x => x.CategoryId)
                 .GreaterThan(0).WithMessage("CategoryId must be greater than zero.");

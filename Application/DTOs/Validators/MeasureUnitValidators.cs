@@ -14,7 +14,7 @@ namespace Application.DTOs.Validators
                 .MustAsync(async (name, cancellation) =>
                 {
                     return !await repo.HasNameAsync(name);
-                });
+                }).WithMessage("This Name already exists.");
 
             RuleFor(x => x.Abbreviation.Trim())
                 .NotEmpty().WithMessage("Abbreviation is required.")
@@ -22,7 +22,7 @@ namespace Application.DTOs.Validators
                 .MustAsync(async (abb, cancellation) =>
                 {
                     return !await repo.HasAbbAsync(abb);
-                });
+                }).WithMessage("This Abbreviation already exists.");
         }
     }
 

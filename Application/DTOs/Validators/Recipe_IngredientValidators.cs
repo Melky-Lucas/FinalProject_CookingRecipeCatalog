@@ -24,9 +24,6 @@ namespace Application.DTOs.Validators
             RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("Id must be greater than zero.");
 
-            RuleFor(x => x.RecipeId)
-                .GreaterThan(0).WithMessage("RecipeId must be greater than zero.");
-
             RuleFor(x => x.IngredientId)
                 .GreaterThan(0).WithMessage("IngredientId must be greater than zero.");
 

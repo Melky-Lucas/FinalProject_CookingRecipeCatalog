@@ -38,6 +38,12 @@ namespace WebAPI.Controllers
             return HandleResult(await _measureUnitService.CreateAsync(measureUnitDTO));
         }
 
+        [HttpPost("range")]
+        public async Task<IActionResult> CreateRange(IEnumerable<CreateMeasureUnitDTO> measureUnitDTOs)
+        {
+            return HandleResult(await _measureUnitService.AddRangeAsync(measureUnitDTOs));
+        }
+
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, UpdateMeasureUnitDTO measureUnitDTO)
         {

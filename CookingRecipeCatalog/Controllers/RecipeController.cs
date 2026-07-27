@@ -48,5 +48,42 @@ namespace WebAPI.Controllers
         {
             return HandleResult(await _recipeService.DeleteAsync(id));
         }
+
+        [HttpPatch("{id:int}/Steps")]
+        public async Task<IActionResult> UpdateSteps(int id, ICollection<UpdateRecipeStepDTO> stepsDTO)
+        {
+            return HandleResult(await _recipeService.UpdateRecipeStepsAsync(id, stepsDTO));
+        }
+
+        [HttpPost("{recipeId:int}/Category/{categoryId:int}")]
+        public async Task<IActionResult> UpdateRecipe_Category(int recipeId, int categoryId)
+        {
+            return HandleResult(await _recipeService.AddRecipeCategoryAsync(recipeId, categoryId));
+        }
+
+        [HttpDelete("{recipeId:int}/Category/{categoryId:int}")]
+        public async Task<IActionResult> DeleteRecipe_Category(int recipeId, int categoryId)
+        {
+            return HandleResult(await _recipeService.RemoveRecipeCategoryAsync(recipeId, categoryId));
+        }
+
+        [HttpPost("{recipeId:int}/Ingredient")]
+        public async Task<IActionResult> AddIngrendient(int recipeId, CreateRecipe_IngredientDTO dto)
+        {
+            return HandleResult(await _recipeService.AddRecipe_IngredientAsync(recipeId, dto));
+        }
+
+        [HttpPut("{recipeId:int}/Ingredient")]
+        public async Task<IActionResult> UpdateIngredient(int recipeId, UpdateRecipe_IngredientDTO dto)
+        {
+            return HandleResult(await _recipeService.UpdateRecipe_IngredientAsync(recipeId, dto));
+        }
+
+        [HttpDelete("{recipeId:int}/Ingredient/{recipe_ingredientId:int}")]
+        public async Task<IActionResult> DeleteIngredient(int recipeId, int recipe_ingredientId)
+        {
+            return HandleResult(await _recipeService.RemoveRecipe_IngredientAsync(recipeId, recipe_ingredientId));
+        }
+
     }
 }

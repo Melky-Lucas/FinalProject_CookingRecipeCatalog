@@ -29,6 +29,7 @@ namespace WebAPI.Extensions
             services.AddScoped<IIngredientCategoryService, IngredientCategoryService>();
             services.AddScoped<IIngredientService, IngredientService>();
             services.AddScoped<ICookingStepService, CookingStepService>();
+            services.AddScoped<IMeasureUnitService, MeasureUnitService>();
             services.AddScoped<ITipService, TipService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
@@ -54,6 +55,7 @@ namespace WebAPI.Extensions
             services.AddScoped<IIngredientCategoryRepository, IngredientCategoryRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<ICookingStepRepository, CookingStepRepository>();
+            services.AddScoped<IMeasureUnitRepository, MeasureUnitRepository>();
             services.AddScoped<ITipRepository, TipRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();

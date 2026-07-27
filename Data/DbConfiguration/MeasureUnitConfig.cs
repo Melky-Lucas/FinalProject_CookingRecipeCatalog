@@ -8,8 +8,11 @@ namespace Infrastructure.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<MeasureUnit> builder)
         {
-            builder.HasIndex(mu => mu.Name).IsUnique();
-            builder.HasIndex(mu => mu.Abbreviation).IsUnique();
+            builder.HasIndex(mu => mu.Name)
+                .IsUnique();
+
+            builder.HasIndex(mu => mu.Abbreviation)
+                .IsUnique();
 
             builder.Property(mu => mu.Name).HasMaxLength(100);
 

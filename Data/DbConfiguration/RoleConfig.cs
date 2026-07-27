@@ -8,6 +8,9 @@ namespace Infrastructure.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
+            builder.HasIndex(r => r.Name)
+                .IsUnique();
+
             builder.Property(r => r.Name).HasMaxLength(50);
 
             // Relationships

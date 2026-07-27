@@ -8,6 +8,9 @@ namespace Infrastructure.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.HasIndex(u => u.Email)
+                .IsUnique();
+
             builder.Property(u => u.Username).HasMaxLength(50);
 
             builder.Property(u => u.Email).HasMaxLength(100);
