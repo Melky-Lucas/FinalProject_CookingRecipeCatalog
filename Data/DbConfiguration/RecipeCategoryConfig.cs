@@ -8,6 +8,9 @@ namespace Infrastructure.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<RecipeCategory> builder)
         {
+            builder.HasIndex(rc => rc.Name)
+                .IsUnique();
+
             builder.Property(rc  => rc.Name).HasMaxLength(100);
 
             builder.Property(rc => rc.Description).HasMaxLength(250);

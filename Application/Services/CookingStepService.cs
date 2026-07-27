@@ -8,7 +8,7 @@ using Core.Models;
 
 namespace Application.Services
 {
-    public class CookingStepService : BaseService<CookingStep, RecipeCookingStepDTO, CreateRecipeCookingStepDTO, UpdateCookingStepDTO>, ICookingStepService
+    public class CookingStepService : BaseService<CookingStep, RecipeCookingStepDTO, CreateRecipeStepDTO, UpdateRecipeStepDTO>, ICookingStepService
     {
         protected override IGenericRepository<CookingStep> Repository => _unitOfWork.CookingSteps;
         public CookingStepService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider, IApplicationValidator validator)

@@ -6,7 +6,7 @@ using Core.Interfaces.Repositories.Generic;
 
 namespace Application.Base
 {
-    public abstract class BaseService<TEntity, TDto, TCreateDto, TUpdateDto> 
+    public abstract class BaseService<TEntity, TDto, TCreateDto, TUpdateDto>
         : IBaseService<TDto, TCreateDto, TUpdateDto>
           where TEntity : BaseEntity
     {
@@ -36,7 +36,7 @@ namespace Application.Base
             var entity = await Repository.GetByIdAsync(id);
 
             if (entity is null)
-                return ServiceResult<TDto>.Failure("Entity not found", 404);
+                return ServiceResult<TDto>.Failure("Entity not found.", 404);
 
             return ServiceResult<TDto>.Success(_mapper.Map<TEntity, TDto>(entity));
         }
@@ -57,7 +57,7 @@ namespace Application.Base
             await _validator.ValidateAsync(dto);
 
             if (!await Repository.ExistsAsync(id))
-                return ServiceResult<TDto>.Failure("Entity not found", 404);
+                return ServiceResult<TDto>.Failure("Entity not found.", 404);
 
             TEntity entity = _mapper.Map<TUpdateDto, TEntity>(dto);
             entity.Id = id;
@@ -72,7 +72,7 @@ namespace Application.Base
         {
             var entity = await Repository.GetByIdAsync(id);
             if (entity is null)
-                return ServiceResult.Failure("Entity not found", 404);
+                return ServiceResult.Failure("Entity not found.", 404);
             Repository.Delete(entity);
             await _unitOfWork.SaveChangesAsync();
 

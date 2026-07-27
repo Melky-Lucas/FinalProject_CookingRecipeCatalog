@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.Validators
 {
-    public class CreateCookingStepDTOValidator : AbstractValidator<CreateRecipeCookingStepDTO>
+    public class CreateCookingStepDTOValidator : AbstractValidator<CreateRecipeStepDTO>
     {
         public CreateCookingStepDTOValidator()
         {
@@ -22,7 +22,7 @@ namespace Application.DTOs.Validators
         }
     }
 
-    public class UpdateCookingStepDTOValidator : AbstractValidator<UpdateCookingStepDTO>
+    public class UpdateCookingStepDTOValidator : AbstractValidator<UpdateRecipeStepDTO>
     {
         public UpdateCookingStepDTOValidator()
         {

@@ -21,7 +21,7 @@ namespace Application.Services
         {
             await _validator.ValidateAsync(dto);
 
-            var oldUnit = await Repository.GetByIdAsync(id);
+            var oldUnit = await Repository.GetByIdAsync(id, false);
 
             if (oldUnit is null)
                 return ServiceResult<MeasureUnitDTO>.Failure("Entity not found", 404);
@@ -45,6 +45,16 @@ namespace Application.Services
             await _unitOfWork.SaveChangesAsync();
 
             return ServiceResult<MeasureUnitDTO>.Success(_mapper.Map<MeasureUnit, MeasureUnitDTO>(newUnit));
+        }
+
+        public async Task<ServiceResult<IEnumerable<MeasureUnitDTO>>> AddRangeAsync(IEnumerable<CreateMeasureUnitDTO> measureUnitDTOs)
+        {
+            var measureUnits = measureUnitDTOs.Select(mu => _mapper.Map<CreateMeasureUnitDTO, MeasureUnit>(mu));
+
+            await _unitOfWork.MeasureUnits.AddRangeAsync(measureUnits);
+            await _unitOfWork.SaveChangesAsync();
+
+            return ServiceResult<IEnumerable<MeasureUnitDTO>>.Success(measureUnits.Select(mu => _mapper.Map<MeasureUnit, MeasureUnitDTO>(mu)).ToList());
         }
     }
 }

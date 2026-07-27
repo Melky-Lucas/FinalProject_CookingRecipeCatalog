@@ -8,6 +8,9 @@ namespace Infrastructure.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<IngredientCategory> builder)
         {
+            builder.HasIndex(ic => ic.Name)
+                .IsUnique();
+
             builder.Property(ic => ic.Name).HasMaxLength(100);
 
             builder.Property(ic => ic.Description).HasMaxLength(250);
@@ -16,7 +19,7 @@ namespace Infrastructure.DbConfiguration
             builder.HasMany(ic => ic.Ingredients)
                    .WithOne(i => i.IngredientCategory)
                    .HasForeignKey(i => i.IngredientCategoryId)
-                   .OnDelete(DeleteBehavior.SetNull);
+                   .OnDelete(DeleteBehavior.Restrict);
         }
         
     }

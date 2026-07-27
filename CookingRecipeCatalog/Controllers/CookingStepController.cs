@@ -33,13 +33,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRecipeCookingStepDTO cookingStepDTO)
+        public async Task<IActionResult> Create(CreateRecipeStepDTO cookingStepDTO)
         {
             return HandleResult(await _cookingStepService.CreateAsync(cookingStepDTO));
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, UpdateCookingStepDTO cookingStepDTO)
+        public async Task<IActionResult> Update(int id, UpdateRecipeStepDTO cookingStepDTO)
         {
             return HandleResult(await _cookingStepService.UpdateAsync(id, cookingStepDTO));
         }

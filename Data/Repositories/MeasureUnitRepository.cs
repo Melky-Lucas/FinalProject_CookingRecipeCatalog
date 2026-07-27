@@ -22,5 +22,10 @@ namespace Infrastructure.Repositories
         {
             return await _table.AnyAsync(a => a.Name == name);
         }
+
+        public async Task AddRangeAsync(IEnumerable<MeasureUnit> units)
+        {
+            await _table.AddRangeAsync(units);
+        }
     }
 }

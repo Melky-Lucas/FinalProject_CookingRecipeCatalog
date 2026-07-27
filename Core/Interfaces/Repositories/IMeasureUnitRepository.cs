@@ -7,5 +7,6 @@ namespace Core.Interfaces.Repositories
     {
         Task<bool> HasNameAsync(string name);
         Task<bool> HasAbbAsync(string abb);
+        Task AddRangeAsync(IEnumerable<MeasureUnit> units);
     }
 }

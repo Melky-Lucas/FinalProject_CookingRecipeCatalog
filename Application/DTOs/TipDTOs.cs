@@ -3,7 +3,7 @@
     public class RecipeTipDTO
     {
         public int Id { get; set; }
-        public int Username { get; set; }
+        public string Username { get; set; } = null!;
         public string Content { get; set; } = null!;
     }
 

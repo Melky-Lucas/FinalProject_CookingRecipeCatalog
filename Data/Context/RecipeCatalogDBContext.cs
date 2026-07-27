@@ -17,6 +17,21 @@ namespace Infrastructure.Context
             modelBuilder.Entity<User>().Navigation(u => u.Password).AutoInclude();
             modelBuilder.Entity<User>().Navigation(u => u.Role).AutoInclude();
 
+            modelBuilder.Entity<Ingredient>().Navigation(i => i.IngredientCategory).AutoInclude();
+
+            modelBuilder.Entity<Recipe_Ingredient>().Navigation(ri => ri.Ingredient).AutoInclude();
+            modelBuilder.Entity<Recipe_Ingredient>().Navigation(ri => ri.Unit).AutoInclude();
+
+            modelBuilder.Entity<Recipe_Category>().Navigation(rc => rc.Category).AutoInclude();
+
+            modelBuilder.Entity<Recipe>().Navigation(r => r.CookingSteps).AutoInclude();
+            modelBuilder.Entity<Recipe>().Navigation(r => r.Tips).AutoInclude();
+            modelBuilder.Entity<Recipe>().Navigation(r => r.Recipe_Categories).AutoInclude();
+            modelBuilder.Entity<Recipe>().Navigation(r => r.Recipe_Ingredients).AutoInclude();
+            modelBuilder.Entity<Recipe>().Navigation(r => r.User).AutoInclude();
+
+            modelBuilder.Entity<Tip>().Navigation(t => t.User).AutoInclude();
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 

@@ -15,10 +15,10 @@ namespace Application.DTOs
         public int Calories { get; set; }
         public bool IsPublic { get; set; }
         public ICollection<Recipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
-        public ICollection<RecipeCategoryDTO> Categories { get; set; } = [];
+        public string[] CategoryNames { get; set; } = [];
         public ICollection<RecipeCookingStepDTO> CookingSteps { get; set; } = [];
         public ICollection<RecipeTipDTO> Tips { get; set; } = [];
-        public string Username { get; set; } = null!;
+        public UserDTO User { get; set; } = null!;
     }
 
     public class CreateRecipeDTO
@@ -35,7 +35,7 @@ namespace Application.DTOs
         public bool IsPublic { get; set; }
         public int[] Category_Ids { get; set; } = [];
         public ICollection<CreateRecipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
-        public ICollection<CreateRecipeCookingStepDTO> CookingSteps { get; set; } = [];
+        public ICollection<CreateRecipeStepDTO> CookingSteps { get; set; } = [];
         public ICollection<CreateRecipeTipDTO> Tips { get; set; } = [];
     }
 
@@ -51,7 +51,5 @@ namespace Application.DTOs
         public RecipeDifficulty Difficulty { get; set; }
         public int Calories { get; set; }
         public bool IsPublic { get; set; }
-        public int[] Category_Ids { get; set; } = [];
-        public ICollection<UpdateRecipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
     }
 }
