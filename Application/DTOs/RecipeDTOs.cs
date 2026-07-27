@@ -52,4 +52,16 @@ namespace Application.DTOs
         public int Calories { get; set; }
         public bool IsPublic { get; set; }
     }
+
+    public class RecipeSearchQuery
+    {
+        public string? Title { get; set; }
+        public int? UserId { get; set; }
+        public int[]? CategoryIds { get; set; }
+        public int[]? RequiredIngredientIds { get; set; }
+        public int[]? OptionalIngredientIds { get; set; }
+        public int[]? ExcludedIngredientIds { get; set; }
+        public int PageSize { get; set; } = 10;
+        public int PageNumber { get; set; } = 1;
+    }
 }

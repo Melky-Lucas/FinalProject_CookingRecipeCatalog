@@ -20,12 +20,13 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllByQuery([FromQuery] RecipeSearchQuery query)
         {
-            return HandleResult(await _recipeService.GetAllAsync());
+            return HandleResult(await _recipeService.GetAllByQueryAsync(query));
         }
 
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
             return HandleResult(await _recipeService.GetByIdAsync(id));
