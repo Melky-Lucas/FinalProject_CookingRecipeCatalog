@@ -76,6 +76,16 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
@@ -83,6 +93,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 app.UseExceptionHandler();
+
+app.UseCors("AllowAngular");
 
 if (app.Environment.IsDevelopment())
 {

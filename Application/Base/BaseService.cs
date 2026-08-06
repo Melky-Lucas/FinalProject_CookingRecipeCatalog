@@ -12,15 +12,13 @@ namespace Application.Base
     {
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IObjectMapper _mapper;
-        protected readonly IServiceProvider _serviceProvider;
         protected readonly IApplicationValidator _validator;
         protected abstract IGenericRepository<TEntity> Repository { get; }
 
-        protected BaseService(IUnitOfWork unitOfWork, IObjectMapper mapper, IServiceProvider serviceProvider, IApplicationValidator Validator)
+        protected BaseService(IUnitOfWork unitOfWork, IObjectMapper mapper, IApplicationValidator Validator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _serviceProvider = serviceProvider;
             _validator = Validator;
         }
 
