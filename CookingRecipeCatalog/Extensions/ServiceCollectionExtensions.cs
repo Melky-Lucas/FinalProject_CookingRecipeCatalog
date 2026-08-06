@@ -70,8 +70,10 @@ namespace WebAPI.Extensions
 
 
             services.AddAutoMapper(cfg =>
-                cfg.AddProfile<MappingProfile>()
-            );
+            {
+                cfg.AddProfile<MappingProfile>();
+                cfg.LicenseKey = config.GetSection("AutoMapper")?.GetSection("Key")?.Value;
+            });
 
             return services;
         }
