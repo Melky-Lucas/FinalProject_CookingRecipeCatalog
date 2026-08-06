@@ -1,6 +1,6 @@
 <Solution>
   <Project Path="Application/Application.csproj" Id="5651e0c4-bcc1-4f42-971c-3506921b3cc0" />
-  <Project Path="CookingRecipeCatalog/WebAPI.csproj" />
+  <Project Path="WebAPI/WebAPI.csproj" />
   <Project Path="Core/Core.csproj" Id="02389920-30a7-42aa-a22b-15828e5fd1c8" />
   <Project Path="Data/Infrastructure.csproj" Id="fc11989a-d351-47f7-a519-6ecbf340e6c8" />
   <Project Path="Test/Test.csproj" Id="7ff67371-fc99-4d41-b47c-f9a054771743" />

@@ -47,16 +47,25 @@ namespace Application.DTOs.Validators
                 .NotNull().WithMessage("Category IDs cannot be null.")
                 .Must(ids => ids.All(id => id > 0)).WithMessage("All Category IDs must be greater than zero.");
 
-            RuleForEach(x => x.Recipe_Ingredients)
+            RuleFor(x => x.Recipe_Ingredients)
                 .NotNull().WithMessage("Recipe ingredients cannot be null.")
+                .NotEmpty().WithMessage("Recipe ingredients cannot be empty.");
+
+            RuleForEach(x => x.Recipe_Ingredients)
                 .SetValidator(new CreateRecipe_IngredientDTOValidator());
 
-            RuleForEach(x => x.CookingSteps)
+            RuleFor(x => x.CookingSteps)
                 .NotNull().WithMessage("Cooking steps cannot be null.")
+                .NotEmpty().WithMessage("Cooking steps cannot be empty.");
+
+            RuleForEach(x => x.CookingSteps)
                 .SetValidator(new CreateCookingStepDTOValidator());
 
             RuleForEach(x => x.Tips)
                 .NotNull().WithMessage("Tips cannot be null.")
+                .NotEmpty().WithMessage("Tips cannot be empty.");
+
+            RuleForEach(x => x.Tips)
                 .SetValidator(new CreateTipDTOValidator());
         }
 
