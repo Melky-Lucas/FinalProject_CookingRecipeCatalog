@@ -43,7 +43,8 @@ namespace WebAPI.Extensions
         {
             // DBContext
             services.AddDbContext<RecipeCatalogDBContext>(o =>
-                o.UseSqlServer(config.GetConnectionString("Database")));
+                o.UseSqlServer(config.GetConnectionString("Database"))
+            );
 
             services.AddScoped<RecipeCatalogDBContext>();
 
@@ -70,8 +71,10 @@ namespace WebAPI.Extensions
 
 
             services.AddAutoMapper(cfg =>
-                cfg.AddProfile<MappingProfile>()
-            );
+            {
+                cfg.AddProfile<MappingProfile>();
+                cfg.LicenseKey = config.GetSection("AutoMapper")?.GetSection("Key")?.Value;
+            });
 
             return services;
         }
