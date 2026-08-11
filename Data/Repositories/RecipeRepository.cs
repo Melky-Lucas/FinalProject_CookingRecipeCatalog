@@ -63,10 +63,10 @@ namespace Infrastructure.Repositories
                 .OrderBy(r => r.Title)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
+                .AsNoTracking()
+                .AsSplitQuery()
                 .ToListAsync();
         }
-
-
 
         public async Task<bool> HasImageURLAsync(string url)
         {

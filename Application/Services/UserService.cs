@@ -13,8 +13,8 @@ namespace Application.Services
     {
         private readonly IPasswordHasher _passwordHasher;
         protected override IGenericRepository<User> Repository => _unitOfWork.Users;
-        public UserService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider, IPasswordHasher passwordHasher, IApplicationValidator validator)
-            : base(unitOfWork, objectMapper, serviceProvider, validator)
+        public UserService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IPasswordHasher passwordHasher, IApplicationValidator validator)
+            : base(unitOfWork, objectMapper, validator)
         {
             _passwordHasher = passwordHasher;
         }

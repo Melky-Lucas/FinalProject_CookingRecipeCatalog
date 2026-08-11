@@ -12,8 +12,8 @@ namespace Application.Services
     public class RecipeCategoryService : BaseService<RecipeCategory, RecipeCategoryDTO, CreateRecipeCategoryDTO, UpdateRecipeCategoryDTO>, IRecipeCategoryService
     {
         protected override IGenericRepository<RecipeCategory> Repository => _unitOfWork.RecipeCategories;
-        public RecipeCategoryService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IServiceProvider serviceProvider, IApplicationValidator validator)
-            : base(unitOfWork, objectMapper, serviceProvider, validator)
+        public RecipeCategoryService(IUnitOfWork unitOfWork, IObjectMapper objectMapper, IApplicationValidator validator)
+            : base(unitOfWork, objectMapper, validator)
         {
 
         }
