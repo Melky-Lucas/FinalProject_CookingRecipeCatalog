@@ -43,7 +43,8 @@ namespace WebAPI.Extensions
         {
             // DBContext
             services.AddDbContext<RecipeCatalogDBContext>(o =>
-                o.UseSqlServer(config.GetConnectionString("Database")));
+                o.UseSqlServer(config.GetConnectionString("Database"))
+            );
 
             services.AddScoped<RecipeCatalogDBContext>();
 
