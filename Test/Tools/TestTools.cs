@@ -1,41 +1,41 @@
-﻿using Core.Models;
+﻿using Application.Contract;
+using Application.DTOs;
+using Application.DTOs.Validators;
+using AutoMapper;
+using Core.Models;
+using FluentValidation;
 using Infrastructure.Context;
+using Infrastructure.PasswordHasher;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using WebAPI.Configuration;
 
 namespace Test.Tools
 {
     public class TestTools : IDisposable
     {
-        static SqliteConnection _connection = new("Filename=:memory:");
+        public static IServiceCollection services = new ServiceCollection()
+            .AddTransient<IValidator<CreateRecipeDTO>, CreateRecipeDTOValidator>()
+            .AddTransient<IValidator<CreateRecipe_IngredientDTO>, CreateRecipe_IngredientDTOValidator>();
 
-        public static async Task SeedDatabase(RecipeCatalogDBContext _dbContext)
+        private static SqliteConnection _connection = new("Data Source=:memory:");
+
+        public static SqliteConnection GetConnection()
         {
-            _dbContext.RecipeCategories.Add(new RecipeCategory { Id = 1, Name = "Pasta" });
-            _dbContext.RecipeCategories.Add(new RecipeCategory { Id = 2, Name = "Italiana" });
+            _connection.Open();
+            return _connection;
+        }
 
-            _dbContext.IngredientCategories.Add(new IngredientCategory { Id = 1, Name = "Meat", Description = "Delicious." });
+        public static IMapper GetMapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<Infrastructure.Mapping.MappingProfile>();
+            }, new LoggerFactory());
 
-            _dbContext.Ingredients.AddRange([
-                new Ingredient { Id = 3, Name = "Pancetta", Description = "Cured pork belly", ImageUrl = "http://example.com/pancetta.jpg", IngredientCategoryId = 1 },
-                new Ingredient { Id = 4, Name = "Parmesano", Description = "Aged Parmesan cheese", ImageUrl = "http://example.com/parmesano.jpg", IngredientCategoryId = 1 },
-                new Ingredient { Id = 5, Name = "Uova", Description = "Fresh eggs", ImageUrl = "http://example.com/uova.jpg", IngredientCategoryId = 1 },
-                new Ingredient { Id = 6, Name = "Pasta", Description = "Fresh pasta", ImageUrl = "http://example.com/pasta.jpg", IngredientCategoryId = 1 }]
-            );
-
-            _dbContext.MeasureUnits.Add(new MeasureUnit { Id = 1, Name = "Gramos", Abbreviation = "g" });
-
-            _dbContext.Roles.Add(new Role { Id = 1, Name = "Chef" });
-
-            _dbContext.Passwords.Add(new Password { Id = 1, PasswordHash = "hashedpassword" });
-
-            _dbContext.Users.Add(new User { Id = 1, Username = "Chef Carlos", Email = "chef.carlos@example.com", PasswordId = 1, RoleId = 1 });
-
-            await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+            return config.CreateMapper();
         }
 
         public static RecipeCatalogDBContext CreateInMemoryDbContext()
@@ -51,6 +51,42 @@ namespace Test.Tools
             _dbContext.Database.EnsureCreated();
 
             return _dbContext;
+        }
+
+        public static void SeedDatabase(RecipeCatalogDBContext _dbContext)
+        {
+            _dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureCreated();
+
+            _dbContext.RecipeCategories.Add(new RecipeCategory { Name = "Pasta" });
+            _dbContext.RecipeCategories.Add(new RecipeCategory { Name = "Italiana" });
+
+            _dbContext.IngredientCategories.Add(new IngredientCategory { Name = "Meat", Description = "Delicious." });
+
+            _dbContext.Ingredients.AddRange([
+                new Ingredient { Name = "Pancetta", Description = "Cured pork belly", ImageUrl = "http://example.com/pancetta.jpg", IngredientCategoryId = 1 },
+                new Ingredient { Name = "Parmesano", Description = "Aged Parmesan cheese", ImageUrl = "http://example.com/parmesano.jpg", IngredientCategoryId = 1 },
+                new Ingredient { Name = "Uova", Description = "Fresh eggs", ImageUrl = "http://example.com/uova.jpg", IngredientCategoryId = 1 },
+                new Ingredient { Name = "Pasta", Description = "Fresh pasta", ImageUrl = "http://example.com/pasta.jpg", IngredientCategoryId = 1 }]
+            );
+
+            _dbContext.MeasureUnits.Add(new MeasureUnit { Name = "Gramos", Abbreviation = "g" });
+
+            _dbContext.Roles.Add(new Role { Name = "Chef" });
+
+            _dbContext.Passwords.Add(new Password { PasswordHash = new PasswordHasherAdapter().Hash("hashedpassword") });
+
+            _dbContext.Users.Add(new User { Username = "Chef Carlos", Email = "chef.carlos@example.com", PasswordId = 1, RoleId = 1 });
+
+            _dbContext.SaveChanges();
+        }
+        public static async Task<string> GetTestAdminTokenAsync(IAuthService authService)
+        {
+            LoginDTO loginDTO = new("chef.carlos@example.com", "hashedpassword");
+            var authResponse = await authService.LoginAsync(loginDTO);
+            string token = authResponse.Token;
+
+            return token;
         }
 
         public void Dispose()

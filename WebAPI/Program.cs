@@ -50,7 +50,7 @@ builder.Services.AddOpenApi(options =>
     {
         document.Components ??= new OpenApiComponents();
         document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
-        document.Security ??= new List<OpenApiSecurityRequirement>();
+        document.Security ??= [];
 
         var bearerScheme = new OpenApiSecurityScheme
         {
@@ -115,3 +115,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
+

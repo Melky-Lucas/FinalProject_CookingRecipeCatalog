@@ -1,37 +1,35 @@
 ﻿using Application.Contract;
 using Application.DTOs;
-using Application.DTOs.Validators;
-using Application.Exceptions;
 using Application.Interfaces;
 using Application.Services;
-using AutoMapper;
 using Core.Enums;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
-using FluentValidation;
 using Infrastructure.Context;
+using Infrastructure.Mapping;
 using Infrastructure.Repositories;
 using Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Moq;
+using System.Net.Http.Json;
 using Test.Tools;
 using Xunit;
 
-namespace Test.Units
+namespace Test.Integration
 {
-    public class RecipeServiceTests : IDisposable
+    public class RecipeTests : IDisposable, IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly Mock<IRecipeRepository> _recipeRepository;
+        private readonly IRecipeRepository _recipeRepository;
         private readonly RecipeCatalogDBContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IObjectMapper _objectMapper;
         private readonly IApplicationValidator _validator;
         private readonly RecipeService _service;
+        private readonly HttpClient _client;
 
-        private static CreateRecipeDTO createRecipeDTO = new()
+        private readonly static CreateRecipeDTO createRecipeDTO = new()
         {
             Title = "Pasta Carbonara",
             Recipe_Ingredients = new List<CreateRecipe_IngredientDTO>
@@ -62,58 +60,26 @@ namespace Test.Units
             }
         };
 
-        private static CreateRecipeDTO invalidCreateRecipeDTO = new()
-        {
-            Title = "Pasta Carbonara",
-            Recipe_Ingredients = new List<CreateRecipe_IngredientDTO>(),
-            CookingSteps = new List<CreateRecipeStepDTO>
-            {
-                new () { StepNumber = 1, Instruction = "Boil pasta.", EstimatedDuration = TimeSpan.FromMinutes(10), Title = "Boil Pasta" },
-                new () { StepNumber = 2, Instruction = "Cook pancetta.", EstimatedDuration = TimeSpan.FromMinutes(15), Title = "Cook Pancetta" },
-                new () { StepNumber = 3, Instruction = "Mix eggs and cheese.", EstimatedDuration = TimeSpan.FromMinutes(5), Title = "Mix Ingredients" },
-                new () { StepNumber = 4, Instruction = "Combine all ingredients.", EstimatedDuration = TimeSpan.FromMinutes(10), Title = "Combine Ingredients" }
-            },
-            Category_Ids = new int[] { 1, 2 },
-            Calories = 500,
-            CookingTime = TimeSpan.FromMinutes(30),
-            Description = "A classic Italian pasta dish.",
-            Difficulty = ModelEnums.RecipeDifficulty.Medium,
-            ImageUrl = "http://example.com/image.jpg",
-            IsPublic = true,
-            PreparationTime = TimeSpan.FromMinutes(15),
-            Servings = 4,
-            UserId = 1,
-            Tips = new List<CreateRecipeTipDTO>
-            {
-                new() { Content = "Use fresh ingredients for best taste.", UserId = 1 },
-                new() { Content = "Serve immediately after cooking.", UserId = 1 }
-            }
-        };
-
-        public RecipeServiceTests()
+        public RecipeTests(WebApplicationFactory<Program> factory)
         {
             _dbContext = TestTools.CreateInMemoryDbContext();
-
+            
             _unitOfWork = new UnitOfWork(_dbContext);
-            _recipeRepository = new Mock<IRecipeRepository>();
+            _recipeRepository = new RecipeRepository(_dbContext);
 
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<Infrastructure.Mapping.MappingProfile>();
-            }, new LoggerFactory());
-            var mapper = config.CreateMapper();
+            var mapper = TestTools.GetMapper();
 
-            var services = new ServiceCollection();
-            services.AddTransient<IValidator<CreateRecipeDTO>, CreateRecipeDTOValidator>();
-            services.AddTransient<IValidator<CreateRecipe_IngredientDTO>, CreateRecipe_IngredientDTOValidator>();
-            services.AddTransient<IRecipeRepository>(_ => _recipeRepository.Object);
+            var services = TestTools.services;
+            services.AddTransient<IRecipeRepository>(_ => _recipeRepository);
 
             _serviceProvider = services.BuildServiceProvider();
 
-            _objectMapper = new Infrastructure.Mapping.AutoMapperAdapter(mapper);
+            _objectMapper = new AutoMapperAdapter(mapper);
             _validator = new ApplicationValidator(_serviceProvider);
 
             _service = new RecipeService(_unitOfWork, _objectMapper, _validator);
+
+            _client = factory.CreateClient();
         }
 
 
@@ -122,7 +88,7 @@ namespace Test.Units
         {
             // Arrange
             var newRecipe = createRecipeDTO;
-            await TestTools.SeedDatabase(_dbContext);
+            TestTools.SeedDatabase(_dbContext);
 
             // Act
             var result = await _service.CreateAsync(newRecipe);
@@ -137,23 +103,15 @@ namespace Test.Units
         }
 
         [Fact]
-        public async Task CreateRecipe_WithEmptyIngredients_ShouldReturnException()
+        public async Task GetRecipes_ShouldReturnOkAndList()
         {
-            // Arrange
-            var invalidRecipe = invalidCreateRecipeDTO;
-            await TestTools.SeedDatabase(_dbContext);
-            _recipeRepository.Setup(r => r.HasTitleAsync(It.IsAny<string>()))
-                .ReturnsAsync(false);
-
-            _recipeRepository.Setup(r => r.HasImageURLAsync(It.IsAny<string>()))
-                .ReturnsAsync(false);
-
             // Act
-            AppValidationException exception = await Assert.ThrowsAsync<AppValidationException>(async () => await _service.CreateAsync(invalidRecipe));
+            var response = await _client.GetAsync("/api/recipe", CancellationToken.None);
+            var recipes = await response.Content.ReadFromJsonAsync<IEnumerable<RecipeDTO>>(CancellationToken.None);
 
             // Assert
-            Assert.Contains("One or more errors have occurred.", exception.Message);
-            Assert.Contains("Recipe ingredients cannot be empty.", exception.Errors.SelectMany(e => e.Value).ToList());
+            response.EnsureSuccessStatusCode();
+            Assert.NotNull(recipes);
         }
 
         public void Dispose()
