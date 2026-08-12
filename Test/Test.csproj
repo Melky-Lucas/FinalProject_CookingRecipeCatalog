@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\CookingRecipeCatalog\WebAPI.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Data\Infrastructure.csproj" />
     <ProjectReference Include="..\WebAPI\WebAPI.csproj" />

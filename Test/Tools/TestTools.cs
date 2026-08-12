@@ -10,7 +10,6 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebAPI.Configuration;
 
 namespace Test.Tools
 {
@@ -20,7 +19,9 @@ namespace Test.Tools
             .AddTransient<IValidator<CreateRecipeDTO>, CreateRecipeDTOValidator>()
             .AddTransient<IValidator<CreateRecipe_IngredientDTO>, CreateRecipe_IngredientDTOValidator>();
 
-        private static SqliteConnection _connection = new("Data Source=:memory:");
+        private static string uniqueDbName = $"Data Source=InMemoryRecipeDb_{Guid.NewGuid()};Mode=Memory;Cache=Shared";
+
+        private static SqliteConnection _connection = new(uniqueDbName);
 
         public static SqliteConnection GetConnection()
         {
@@ -55,7 +56,6 @@ namespace Test.Tools
 
         public static void SeedDatabase(RecipeCatalogDBContext _dbContext)
         {
-            _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
             _dbContext.RecipeCategories.Add(new RecipeCategory { Name = "Pasta" });
@@ -79,14 +79,6 @@ namespace Test.Tools
             _dbContext.Users.Add(new User { Username = "Chef Carlos", Email = "chef.carlos@example.com", PasswordId = 1, RoleId = 1 });
 
             _dbContext.SaveChanges();
-        }
-        public static async Task<string> GetTestAdminTokenAsync(IAuthService authService)
-        {
-            LoginDTO loginDTO = new("chef.carlos@example.com", "hashedpassword");
-            var authResponse = await authService.LoginAsync(loginDTO);
-            string token = authResponse.Token;
-
-            return token;
         }
 
         public void Dispose()

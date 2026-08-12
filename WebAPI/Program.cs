@@ -1,4 +1,5 @@
 using Application.Interfaces;
+using Infrastructure.Seed;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -99,6 +100,9 @@ app.UseCors("AllowAngular");
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    DataSeeder.InitializeDB(services);
 
     app.UseSwaggerUI(options =>
     {
