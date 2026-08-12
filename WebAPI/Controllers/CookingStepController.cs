@@ -1,0 +1,54 @@
+﻿using Application.Contract;
+using Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WebAPI.Controllers.Base;
+
+namespace WebAPI.Controllers
+{
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CookingStepController : ApiBaseController
+    {
+        private readonly ICookingStepService _cookingStepService;
+
+        public CookingStepController(ICookingStepService cookingStepService)
+        {
+            _cookingStepService = cookingStepService;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return HandleResult(await _cookingStepService.GetAllAsync());
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            return HandleResult(await _cookingStepService.GetByIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateRecipeStepDTO cookingStepDTO)
+        {
+            return HandleResult(await _cookingStepService.CreateAsync(cookingStepDTO));
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, UpdateRecipeStepDTO cookingStepDTO)
+        {
+            return HandleResult(await _cookingStepService.UpdateAsync(id, cookingStepDTO));
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return HandleResult(await _cookingStepService.DeleteAsync(id));
+        }
+    }
+}
+

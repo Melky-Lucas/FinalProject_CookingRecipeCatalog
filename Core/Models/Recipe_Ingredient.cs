@@ -1,0 +1,18 @@
+﻿using Core.Base;
+
+namespace Core.Models
+{
+    public class Recipe_Ingredient : BaseEntity
+    {
+        public required int RecipeId { get; set; }
+        public required int IngredientId { get; set; }
+        public int Quantity { get; set; }
+        public required int UnitId { get; set; }
+        public bool IsOptional { get; set; }
+
+        // Navigation properties
+        public Recipe Recipe { get; set; } = null!;
+        public Ingredient Ingredient { get; set; } = null!;
+        public MeasureUnit Unit { get; set; } = null!;
+    }
+}

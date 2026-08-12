@@ -1,0 +1,23 @@
+﻿namespace Application.DTOs
+{
+    public class RecipeTipDTO
+    {
+        public int Id { get; set; }
+        public string Username { get; set; } = null!;
+        public string Content { get; set; } = null!;
+    }
+
+    public class CreateRecipeTipDTO
+    {
+        public int UserId { get; set; }
+        public string Content { get; set; } = null!;
+    }
+
+    public class UpdateTipDTO
+    {
+        public int Id { get; set; }
+        public string Content { get; set; } = null!;
+    }
+
+
+}
