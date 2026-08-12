@@ -1,0 +1,15 @@
+using Core.Base;
+
+namespace Core.Models
+{
+    public class Tip : BaseEntity
+    {
+        public required int UserId { get; set; }
+        public required int RecipeId { get; set; }
+        public required string Content { get; set; }
+
+        // Navigation properties
+        public Recipe Recipe { get; set; } = null!;
+        public User User { get; set; } = null!;
+    }
+}

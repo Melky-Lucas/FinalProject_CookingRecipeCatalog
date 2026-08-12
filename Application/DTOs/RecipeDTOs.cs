@@ -1,0 +1,67 @@
+﻿using static Core.Enums.ModelEnums;
+
+namespace Application.DTOs
+{
+    public class RecipeDTO
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
+        public TimeSpan PreparationTime { get; set; }
+        public TimeSpan CookingTime { get; set; }
+        public int Servings { get; set; }
+        public RecipeDifficulty Difficulty { get; set; }
+        public int Calories { get; set; }
+        public bool IsPublic { get; set; }
+        public ICollection<Recipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
+        public string[] CategoryNames { get; set; } = [];
+        public ICollection<RecipeCookingStepDTO> CookingSteps { get; set; } = [];
+        public ICollection<RecipeTipDTO> Tips { get; set; } = [];
+        public UserDTO User { get; set; } = null!;
+    }
+
+    public class CreateRecipeDTO
+    {
+        public string Title { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
+        public TimeSpan PreparationTime { get; set; }
+        public TimeSpan CookingTime { get; set; }
+        public int Servings { get; set; }
+        public RecipeDifficulty Difficulty { get; set; }
+        public int Calories { get; set; }
+        public int UserId { get; set; }
+        public bool IsPublic { get; set; }
+        public int[] Category_Ids { get; set; } = [];
+        public ICollection<CreateRecipe_IngredientDTO> Recipe_Ingredients { get; set; } = [];
+        public ICollection<CreateRecipeStepDTO> CookingSteps { get; set; } = [];
+        public ICollection<CreateRecipeTipDTO> Tips { get; set; } = [];
+    }
+
+    public class UpdateRecipeDTO
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
+        public TimeSpan PreparationTime { get; set; }
+        public TimeSpan CookingTime { get; set; }
+        public int Servings { get; set; }
+        public RecipeDifficulty Difficulty { get; set; }
+        public int Calories { get; set; }
+        public bool IsPublic { get; set; }
+    }
+
+    public class RecipeSearchQuery
+    {
+        public string? Title { get; set; }
+        public int? UserId { get; set; }
+        public int[]? CategoryIds { get; set; }
+        public int[]? RequiredIngredientIds { get; set; }
+        public int[]? OptionalIngredientIds { get; set; }
+        public int[]? ExcludedIngredientIds { get; set; }
+        public int PageSize { get; set; } = 10;
+        public int PageNumber { get; set; } = 1;
+    }
+}
