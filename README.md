@@ -28,7 +28,7 @@ Con .NET 10, la especificación OpenAPI se genera de forma nativa. Si está habi
 * `(https://localhost:7274/swagger/index.html)` (o el puerto asignado por tu perfil de ejecución).
 
 ## 🛠️ Estructura del Proyecto
-* **WebAPIProgram.cs**: Configuración del pipeline HTTP y servicios (Inyección de Dependencias).
+* **WebAPI/Program.cs**: Configuración del pipeline HTTP y servicios (Inyección de Dependencias).
 * **WebAPI/Controllers/** o **Endpoints/**: Definición de los recursos y rutas de la API.
 * **Core/Models/**: Entidades de datos de la app.
 * **WebAPI/appsettings.json**: Configuración de la aplicación y cadenas de conexión.
