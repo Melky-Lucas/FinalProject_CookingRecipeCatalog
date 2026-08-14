@@ -1,0 +1,331 @@
+<div class="container py-4">
+  <a routerLink="/mis-recetas" class="btn btn-link ps-0 mb-3">&larr; Volver a mis recetas</a>
+
+  <h1 class="h2 mb-4">{{ isEditMode ? 'Editar receta' : 'Nueva receta' }}</h1>
+
+  @if (loading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  } @else {
+    @if (error) {
+      <div class="alert alert-danger">{{ error }}</div>
+    }
+
+    @if (hasApiErrors) {
+      <div class="alert alert-danger" role="alert">
+        <strong>Por favor, corrige los siguientes errores:</strong>
+          @for (field of ApiErrorMessages | keyvalue; track field.key) {
+            <ul>
+              @for (error of field.value; track error) {
+                <li>{{ error }}</li>
+              }
+            </ul>
+          }
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="row g-4">
+      <div class="col-12 col-lg-8">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h2 class="h5">Información general</h2>
+            <div class="row g-3">
+
+              <div class="col-12">
+                <label class="form-label h6" for="title">Título*</label>
+                <input id="title" name="title" class="form-control" formControlName="title" />
+                @if (isFieldInvalid('title')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('title'); track error) {
+                      <div>El título {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-12">
+                <label class="form-label h6" for="description">Descripción</label>
+                <textarea id="description" class="form-control" rows="3" formControlName="description"></textarea>
+                @if (isFieldInvalid('description')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('description'); track error) {
+                      <div>La descripción {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-12">
+                <label class="form-label h6" for="imageUrl">URL de imagen*</label>
+                <input id="imageUrl" class="form-control" formControlName="imageUrl" />
+                @if (isFieldInvalid('imageUrl')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('imageUrl'); track error) {
+                      <div>La imagen {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label h6" for="preparationMinutes">Preparación (min)*</label>
+                <input id="preparationMinutes" type="number" class="form-control" formControlName="preparationMinutes" />
+                @if (isFieldInvalid('preparationMinutes')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('preparationMinutes'); track error) {
+                      <div>La preparación {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label h6" for="cookingMinutes">Cocción (min)*</label>
+                <input id="cookingMinutes" type="number" class="form-control" formControlName="cookingMinutes" />
+                @if (isFieldInvalid('cookingMinutes')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('cookingMinutes'); track error) {
+                      <div>La cocción {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label h6" for="servings">Porciones*</label>
+                <input id="servings" type="number" class="form-control" formControlName="servings" />
+                @if (isFieldInvalid('servings')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('servings'); track error) {
+                      <div>Las porciones {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label h6" for="difficulty">Dificultad*</label>
+                <select id="difficulty" class="form-select" formControlName="difficulty">
+                  @for (item of difficulties; track item.value) {
+                    <option [ngValue]="item.value">{{ item.label }}</option>
+                  }
+                </select>
+                @if (isFieldInvalid('difficulty')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('difficulty'); track error) {
+                      <div>La dificultad {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+              
+              <div class="col-md-4">
+                <label class="form-label h6" for="calories">Calorías*</label>
+                <input id="calories" type="number" class="form-control" formControlName="calories" />
+                @if (isFieldInvalid('calories')) {
+                  <div class="alert alert-danger mt-2 p-2">
+                    @for (error of getErrors('calories'); track error) {
+                      <div>Las calorías {{ errorMessages[error] }}</div>
+                    }
+                  </div>
+                }
+              </div>
+              
+              <div class="col-md-4 d-flex align-items-end">
+                <div class="form-check">
+                  <input id="isPublic" class="form-check-input" type="checkbox" formControlName="isPublic" />
+                  <label class="form-check-label" for="isPublic">Receta pública</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="h5 mb-0">Ingredientes</h2>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="addIngredientRow()">
+                Agregar
+              </button>
+            </div>
+
+            <div formArrayName="ingredients" class="vstack gap-3">
+              @for (group of ingredientsArray.controls; track group; let i = $index) {
+                <div [formGroupName]="i" class="border rounded p-3">
+                  <div class="row g-3">
+
+                    <div class="col-md-4">
+                      <label class="form-label h6">Ingrediente*</label>
+                      <select class="form-select" formControlName="ingredientId">
+                        @for (ingredient of ingredients; track ingredient.id) {
+                          <option [ngValue]="ingredient.id">{{ ingredient.name }}</option>
+                        }
+                      </select>
+                      @if (isIngredientFieldInvalid(i, 'ingredientId')) {
+                        <div class="alert alert-danger mt-2 p-2">
+                          @for (error of getIngredientErrors(i, 'ingredientId'); track error) {
+                            <div>El ingrediente {{ errorMessages[error] }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <div class="col-md-2">
+                      <label class="form-label h6">Cantidad*</label>
+                      <input type="number" class="form-control" formControlName="quantity" />
+                      @if (isIngredientFieldInvalid(i, 'quantity')) {
+                        <div class="alert alert-danger mt-2 p-2">
+                          @for (error of getIngredientErrors(i, 'quantity'); track error) {
+                            <div>La cantidad {{ errorMessages[error] }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <div class="col-md-3">
+                      <label class="form-label h6">Unidad*</label>
+                      <select class="form-select" formControlName="unitId">
+                        @for (unit of measureUnits; track unit.id) {
+                          <option [ngValue]="unit.id">{{ unit.name }} ({{ unit.abbreviation }})</option>
+                        }
+                      </select>
+                      @if (isIngredientFieldInvalid(i, 'unitId')) {
+                        <div class="alert alert-danger mt-2 p-2">
+                          @for (error of getIngredientErrors(i, 'unitId'); track error) {
+                            <div>La unidad {{ errorMessages[error] }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="isOptional" />
+                        <label class="form-check-label">Opcional</label>
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        (click)="removeIngredientRow(i)"
+                        [disabled]="ingredientsArray.length === 1">
+                        X
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="h5 mb-0">Pasos de cocción</h2>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="addStepRow()">Agregar</button>
+            </div>
+
+            <div formArrayName="steps" class="vstack gap-3">
+              @for (group of stepsArray.controls; track group; let i = $index) {
+                <div [formGroupName]="i" class="border rounded p-3">
+                  <div class="row g-2">
+
+                    <div class="col-md-3">
+                      <label class="form-label h6">N°</label>
+                      <input type="number" class="form-control" formControlName="stepNumber" readonly />
+                      @if (isStepsFieldInvalid(i, 'stepNumber')) {
+                        <div class="alert alert-danger mt-2 p-2">
+                          @for (error of getStepsErrors(i, 'stepNumber'); track error) {
+                            <div>El número de paso {{ errorMessages[error] }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <div class="col-md-5">
+                      <label class="form-label h6">Título*</label>
+                      <input class="form-control" formControlName="title" />
+                      @if (isStepsFieldInvalid(i, 'title')) {
+                        <div class="alert alert-danger mt-2 p-2">
+                          @for (error of getStepsErrors(i, 'title'); track error) {
+                            <div>El título {{ errorMessages[error] }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <div class="col-md-3">
+                      <label class="form-label h6">Minutos*</label>
+                      <input type="number" class="form-control" formControlName="estimatedMinutes" />
+                      @if (isStepsFieldInvalid(i, 'estimatedMinutes')) {
+                        <div class="alert alert-danger mt-2 p-2">
+                          @for (error of getStepsErrors(i, 'estimatedMinutes'); track error) {
+                            <div>Los minutos estimados {{ errorMessages[error] }}</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                    
+                    <div class="col-md-1 d-flex align-items-end">
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        (click)="removeStepRow(i)"
+                        [disabled]="stepsArray.length === 1">
+                        X
+                      </button>
+                    </div>
+
+                    <div class="row g-2">
+                      <div class="col-md-12">
+                      <label class="form-label h6">Instrucción*</label>
+                      <textarea class="form-control" rows="2" formControlName="instruction"></textarea>
+                      @if (isStepsFieldInvalid(i, 'instruction')) {
+                        <div class="alert alert-danger mt-2 p-2">
+                          @for (error of getStepsErrors(i, 'instruction'); track error) {
+                            <div>La instrucción {{ errorMessages[error] }}</div>
+                          }
+                        </div>
+                      }
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="card shadow-sm sticky-lg-top">
+          <div class="card-body">
+            <h2 class="h5">Categorías</h2>
+            <div class="vstack gap-2 mb-4">
+              @for (category of categories; track category.id) {
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="'cat-' + category.id"
+                    [checked]="isCategorySelected(category.id)"
+                    (change)="toggleCategory(category.id, $event)" />
+                  <label class="form-check-label" [for]="'cat-' + category.id">{{ category.name }}</label>
+                </div>
+              }
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit" [disabled]="saving">
+              {{ saving ? 'Guardando...' : (isEditMode ? 'Guardar cambios' : 'Crear receta') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  }
+</div>
