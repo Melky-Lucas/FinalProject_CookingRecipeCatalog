@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+    <a class="navbar-brand fw-semibold logo" routerLink="/">
+      <img src="https://i.ibb.co/S4GMgXj7/Recipe-Nest.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2 border border-2 border-dark rounded-circle">
+      Fantasy Recipes
+    </a>
+    <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNav"
+        aria-controls="mainNav"
+        aria-expanded="false"
+        aria-label="Alternar navegación">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/" routerLinkActive="active accent-text" [routerLinkActiveOptions]="{ exact: true }">
+            Inicio
+            </a>
+        </li>
+        @if (auth.isAuthenticated()) {
+            <li class="nav-item">
+            <a class="nav-link" routerLink="/mis-recetas" routerLinkActive="accent-text">Mis Recetas</a>
+            </li>
+        }
+        </ul>
+        <ul class="navbar-nav">
+        @if (auth.isAuthenticated()) {
+            <li class="nav-item">
+            <a class="nav-link btn-logout" data-bs-toggle="modal" data-bs-target="#logoutModal">Cerrar sesión</a>
+            </li>
+        } @else {
+            <li class="nav-item">
+            <a class="nav-link" routerLink="/login" routerLinkActive="accent-text">Iniciar sesión</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" routerLink="/registro" routerLinkActive="accent-text">Registrarse</a>
+            </li>
+        }
+        </ul>
+    </div>
+    </div>
+</nav>
+
+<!-- logoutModal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Cerrar sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Estas seguro de que deseas cerrar sesión?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="auth.logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
