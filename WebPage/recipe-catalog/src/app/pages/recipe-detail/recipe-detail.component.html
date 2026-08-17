@@ -1,0 +1,94 @@
+<div class="container py-4">
+  <a routerLink="/" class="btn btn-link ps-0 mb-3">&larr; Volver al catálogo</a>
+
+  @if (loading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  } @else if (error) {
+    <div class="alert alert-danger">{{ error }}</div>
+  } @else if (recipe) {
+    <div class="row g-4">
+      <div class="col-lg-5">
+        @if (recipe.imageUrl) {
+          <img [src]="recipe.imageUrl" class="img-fluid rounded shadow-sm detail-image" [alt]="recipe.title" />
+        }
+      </div>
+      <div class="col-lg-7">
+        <h1 class="h2">{{ recipe.title }}</h1>
+        <p class="text-muted">Por {{ recipe.user.username }}</p>
+        <p>{{ recipe.description }}</p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="border rounded p-2 text-center">
+              <div class="small text-muted">Dificultad</div>
+              <strong>{{ difficultyLabel(recipe.difficulty) }}</strong>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="border rounded p-2 text-center d-flex flex-row align-items-center">
+              <button class="btn-servings btn btn-light" (click)="changeServings(1)">+</button>
+              <div class="flex-column align-items-center">
+                <div class="small text-muted">Porciones</div>
+                <strong>{{ recipe.servings }}</strong>
+              </div>
+              <button class="btn-servings btn btn-light" (click)="changeServings(-1)">-</button>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="border rounded p-2 text-center">
+              <div class="small text-muted">Preparación</div>
+              <strong>{{ formatTimeSpan(recipe.preparationTime) }}</strong>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="border rounded p-2 text-center">
+              <div class="small text-muted">Cocción</div>
+              <strong>{{ formatTimeSpan(recipe.cookingTime) }}</strong>
+            </div>
+          </div>
+        </div>
+
+        @if (recipe.categoryNames.length) {
+          <div class="mb-4">
+            <h2 class="h5">Categorías</h2>
+            @for (category of recipe.categoryNames; track category) {
+              <span class="badge bg-primary me-1">{{ category }}</span>
+            }
+          </div>
+        }
+
+        <div class="mb-4">
+          <h2 class="h5">Ingredientes</h2>
+          <ul class="list-group">
+            @for (item of recipe.recipe_Ingredients; track item.id) {
+              <li class="list-group-item d-flex justify-content-between">
+                <span>
+                  {{ item.ingredient.name }}
+                  @if (item.isOptional) {
+                    <span class="badge bg-secondary ms-1">Opcional</span>
+                  }
+                </span>
+                <span>{{ item.quantity }} {{ item.unit.abbreviation || item.unit.name }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="h5">Pasos</h2>
+          <ol class="list-group list-group-numbered">
+            @for (step of recipe.cookingSteps; track step.id) {
+              <li class="list-group-item">
+                <div class="fw-semibold">{{ step.title }}</div>
+                <div>{{ step.instruction }}</div>
+                <small class="text-muted">{{ formatTimeSpan(step.estimatedDuration) }}</small>
+              </li>
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  }
+</div>
