@@ -53,6 +53,51 @@ namespace WebAPI.Middlewares
                     };
                     break;
 
+                case UnauthorizedException appUnauthorizedException:
+                    statusCode = appUnauthorizedException.StatusCode;
+
+                    problemDetails = new()
+                    {
+                        Type = $"{statusCodeLink}/{statusCode}",
+                        Title = "Unauthorized",
+                        Status = statusCode,
+                        Detail = exception.Message,
+                        Instance = context.Request.Path,
+                        TraceId = context.TraceIdentifier,
+                        Timestamp = DateTime.UtcNow
+                    };
+                    break;
+
+                case ConflictException appConflictException:
+                    statusCode = appConflictException.StatusCode;
+
+                    problemDetails = new()
+                    {
+                        Type = $"{statusCodeLink}/{statusCode}",
+                        Title = "Conflict Error",
+                        Status = statusCode,
+                        Detail = exception.Message,
+                        Instance = context.Request.Path,
+                        TraceId = context.TraceIdentifier,
+                        Timestamp = DateTime.UtcNow
+                    };
+                    break;
+
+                case NotFoundException appNotFoundException:
+                    statusCode = appNotFoundException.StatusCode;
+
+                    problemDetails = new()
+                    {
+                        Type = $"{statusCodeLink}/{statusCode}",
+                        Title = "Not Found Resource",
+                        Status = statusCode,
+                        Detail = exception.Message,
+                        Instance = context.Request.Path,
+                        TraceId = context.TraceIdentifier,
+                        Timestamp = DateTime.UtcNow
+                    };
+                    break;
+
                 default:
                     problemDetails = new CustomProblemDetails
                     {
