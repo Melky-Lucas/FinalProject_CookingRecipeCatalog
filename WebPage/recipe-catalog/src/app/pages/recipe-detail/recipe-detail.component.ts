@@ -3,11 +3,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { RecipeDto } from '../../models/recipe.models';
 import { difficultyLabel, formatTimeSpan } from '../../utils/recipe.utils';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-detail',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DecimalPipe],
   templateUrl: './recipe-detail.component.html',
   styleUrl: './recipe-detail.component.css'
 })

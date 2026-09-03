@@ -11,7 +11,7 @@ namespace Infrastructure.Seed
         {
             var context = serviceProvider.GetRequiredService<RecipeCatalogDBContext>();
 
-            if (context.Database.EnsureCreated())
+            if (!context.Database.EnsureCreated())
                 context.Database.Migrate();
 
             if (context.Roles.Any())

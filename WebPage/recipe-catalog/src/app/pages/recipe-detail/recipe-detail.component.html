@@ -70,7 +70,7 @@
                     <span class="badge bg-secondary ms-1">Opcional</span>
                   }
                 </span>
-                <span>{{ item.quantity }} {{ item.unit.abbreviation || item.unit.name }}</span>
+                <span>{{ item.quantity | number:'1.0-2' }} {{ item.unit.abbreviation || item.unit.name }}</span>
               </li>
             }
           </ul>
