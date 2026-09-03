@@ -86,8 +86,15 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
 
         builder.WithOrigins("http://localhost:3000")
-           .AllowAnyMethod()
-           .AllowAnyHeader();
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+
+    options.AddPolicy("AllowWeb", builder =>
+    {
+        builder.WithOrigins("https://superlative-kitten-e5bb53.netlify.app")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
     });
 });
 
@@ -99,7 +106,9 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 
-app.UseCors("AllowAngular");
+app.UseRouting();
+
+app.UseCors("AllowWeb");
 
 if (app.Environment.IsDevelopment())
 {
