@@ -26,369 +26,455 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<TimeSpan>("EstimatedDuration")
-                        .HasColumnType("interval");
+                        .HasColumnType("interval")
+                        .HasColumnName("estimatedduration");
 
                     b.Property<string>("Instruction")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("instruction");
 
                     b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("recipeid");
 
                     b.Property<int>("StepNumber")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("stepnumber");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("title");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_cookingsteps");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("RecipeId")
+                        .HasDatabaseName("ix_cookingsteps_recipeid");
 
-                    b.ToTable("CookingSteps");
+                    b.ToTable("cookingsteps", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Ingredient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("description");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("imageurl");
 
                     b.Property<int>("IngredientCategoryId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("ingredientcategoryid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_ingredients");
 
                     b.HasIndex("ImageUrl")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_ingredients_imageurl");
 
-                    b.HasIndex("IngredientCategoryId");
+                    b.HasIndex("IngredientCategoryId")
+                        .HasDatabaseName("ix_ingredients_ingredientcategoryid");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_ingredients_name");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("ingredients", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.IngredientCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_ingredientcategories");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_ingredientcategories_name");
 
-                    b.ToTable("IngredientCategories");
+                    b.ToTable("ingredientcategories", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.MeasureUnit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("abbreviation");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_measureunits");
 
                     b.HasIndex("Abbreviation")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_measureunits_abbreviation");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_measureunits_name");
 
-                    b.ToTable("MeasureUnits");
+                    b.ToTable("measureunits", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Password", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("passwordhash");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updatedat");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_passwords");
 
-                    b.ToTable("Passwords");
+                    b.ToTable("passwords", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Recipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Calories")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("calories");
 
                     b.Property<TimeSpan>("CookingTime")
-                        .HasColumnType("interval");
+                        .HasColumnType("interval")
+                        .HasColumnName("cookingtime");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("description");
 
                     b.Property<string>("Difficulty")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("character varying(25)");
+                        .HasColumnType("character varying(25)")
+                        .HasColumnName("difficulty");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("imageurl");
 
                     b.Property<bool>("IsPublic")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("ispublic");
 
                     b.Property<TimeSpan>("PreparationTime")
-                        .HasColumnType("interval");
+                        .HasColumnType("interval")
+                        .HasColumnName("preparationtime");
 
                     b.Property<int>("Servings")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("servings");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("title");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_recipes");
 
                     b.HasIndex("ImageUrl")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_recipes_imageurl");
 
                     b.HasIndex("Title")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_recipes_title");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_recipes_userid");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("recipes", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.RecipeCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_recipecategories");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_recipecategories_name");
 
-                    b.ToTable("RecipeCategories");
+                    b.ToTable("recipecategories", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Recipe_Category", b =>
                 {
                     b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("recipeid");
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("categoryid");
 
-                    b.HasKey("RecipeId", "CategoryId");
+                    b.HasKey("RecipeId", "CategoryId")
+                        .HasName("pk_recipe_categories");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("ix_recipe_categories_categoryid");
 
-                    b.ToTable("Recipe_Categories");
+                    b.ToTable("recipe_categories", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Recipe_Ingredient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("IngredientId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("ingredientid");
 
                     b.Property<bool>("IsOptional")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("isoptional");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
 
                     b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("recipeid");
 
                     b.Property<int>("UnitId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("unitid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_recipe_ingredients");
 
-                    b.HasIndex("IngredientId");
+                    b.HasIndex("IngredientId")
+                        .HasDatabaseName("ix_recipe_ingredients_ingredientid");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("RecipeId")
+                        .HasDatabaseName("ix_recipe_ingredients_recipeid");
 
-                    b.HasIndex("UnitId");
+                    b.HasIndex("UnitId")
+                        .HasDatabaseName("ix_recipe_ingredients_unitid");
 
-                    b.ToTable("Recipe_Ingredients");
+                    b.ToTable("recipe_ingredients", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_roles");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_roles_name");
 
-                    b.ToTable("Roles");
+                    b.ToTable("roles", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Tip", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("content");
 
                     b.Property<int>("RecipeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("recipeid");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("userid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_tips");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("RecipeId")
+                        .HasDatabaseName("ix_tips_recipeid");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_tips_userid");
 
-                    b.ToTable("Tips");
+                    b.ToTable("tips", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("email");
 
                     b.Property<int>("PasswordId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("passwordid");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("roleid");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("username");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_email");
 
                     b.HasIndex("PasswordId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_passwordid");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_users_roleid");
 
-                    b.ToTable("Users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.CookingStep", b =>
@@ -397,7 +483,8 @@ namespace Infrastructure.Migrations
                         .WithMany("CookingSteps")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_cookingsteps_recipes_recipeid");
 
                     b.Navigation("Recipe");
                 });
@@ -408,7 +495,8 @@ namespace Infrastructure.Migrations
                         .WithMany("Ingredients")
                         .HasForeignKey("IngredientCategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_ingredients_ingredientcategories_ingredientcategoryid");
 
                     b.Navigation("IngredientCategory");
                 });
@@ -419,7 +507,8 @@ namespace Infrastructure.Migrations
                         .WithMany("Recipes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_recipes_users_userid");
 
                     b.Navigation("User");
                 });
@@ -430,13 +519,15 @@ namespace Infrastructure.Migrations
                         .WithMany("Recipe_Categories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_recipe_categories_recipecategories_categoryid");
 
                     b.HasOne("Core.Models.Recipe", "Recipe")
                         .WithMany("Recipe_Categories")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_recipe_categories_recipes_recipeid");
 
                     b.Navigation("Category");
 
@@ -449,19 +540,22 @@ namespace Infrastructure.Migrations
                         .WithMany("Recipe_Ingredients")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_recipe_ingredients_ingredients_ingredientid");
 
                     b.HasOne("Core.Models.Recipe", "Recipe")
                         .WithMany("Recipe_Ingredients")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_recipe_ingredients_recipes_recipeid");
 
                     b.HasOne("Core.Models.MeasureUnit", "Unit")
                         .WithMany("Recipe_Ingredients")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_recipe_ingredients_measureunits_unitid");
 
                     b.Navigation("Ingredient");
 
@@ -476,13 +570,15 @@ namespace Infrastructure.Migrations
                         .WithMany("Tips")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_tips_recipes_recipeid");
 
                     b.HasOne("Core.Models.User", "User")
                         .WithMany("Tips")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_tips_users_userid");
 
                     b.Navigation("Recipe");
 
@@ -495,13 +591,15 @@ namespace Infrastructure.Migrations
                         .WithOne("User")
                         .HasForeignKey("Core.Models.User", "PasswordId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_users_passwords_passwordid");
 
                     b.HasOne("Core.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_users_roles_roleid");
 
                     b.Navigation("Password");
 

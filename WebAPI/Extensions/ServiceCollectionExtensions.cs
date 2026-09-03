@@ -58,6 +58,8 @@ namespace WebAPI.Extensions
             // DBContext
             services.AddDbContext<RecipeCatalogDBContext>(o =>
                 o.UseNpgsql(connectionString)
+                 .UseLowerCaseNamingConvention()
+
             );
 
             services.AddScoped<RecipeCatalogDBContext>();
