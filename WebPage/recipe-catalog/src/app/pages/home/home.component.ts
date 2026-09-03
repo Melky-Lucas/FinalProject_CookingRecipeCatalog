@@ -9,8 +9,6 @@ import { CatalogService } from '../../services/catalog.service';
 import { RecipeDto, IngredientDto, RecipeDifficulty } from '../../models/recipe.models';
 import { RecipeCategoryDto } from '../../models/catalog.models';
 import { difficultyLabel, formatTimeSpan } from '../../utils/recipe.utils';
-import { trigger, transition, style, animate } from '@angular/animations';
-
 
 interface Filters {
   title: string;

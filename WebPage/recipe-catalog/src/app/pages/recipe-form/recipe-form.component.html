@@ -146,7 +146,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h2 class="h5 mb-0">Ingredientes</h2>
-              <button type="button" class="btn btn-sm btn-outline-primary" (click)="addIngredientRow()">
+              <button type="button" class="btn btn-sm btn-outline-primary" [disabled]="isIngredientLimitReached()" (click)="addIngredientRow()">
                 Agregar
               </button>
             </div>
@@ -158,9 +158,11 @@
 
                     <div class="col-md-4">
                       <label class="form-label h6">Ingrediente*</label>
-                      <select class="form-select" formControlName="ingredientId">
+                      <select class="form-select" formControlName="ingredientId" (change)="onIngredientSelect(i, $event)">
                         @for (ingredient of ingredients; track ingredient.id) {
-                          <option [ngValue]="ingredient.id">{{ ingredient.name }}</option>
+                          <option [ngValue]="ingredient.id" [disabled]="isIngredientSelected(ingredient.id)">
+                            {{ ingredient.name }}
+                          </option>
                         }
                       </select>
                       @if (isIngredientFieldInvalid(i, 'ingredientId')) {
