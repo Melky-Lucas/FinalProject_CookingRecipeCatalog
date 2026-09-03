@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Seed
@@ -10,7 +11,8 @@ namespace Infrastructure.Seed
         {
             var context = serviceProvider.GetRequiredService<RecipeCatalogDBContext>();
 
-            context.Database.EnsureCreated();
+            if (context.Database.EnsureCreated())
+                context.Database.Migrate();
 
             if (context.Roles.Any())
             {

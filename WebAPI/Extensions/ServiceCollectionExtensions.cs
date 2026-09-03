@@ -41,9 +41,21 @@ namespace WebAPI.Extensions
         public static IServiceCollection AddInfrastructureServices(
             this IServiceCollection services, IConfiguration config)
         {
+            var connectionString = config.GetConnectionString("Postgres");
+
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+            if (!string.IsNullOrEmpty(databaseUrl))
+            {
+                var databaseUri = new Uri(databaseUrl);
+                var userInfo = databaseUri.UserInfo.Split(':');
+
+                connectionString = $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseUri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=True";
+            }
+
             // DBContext
             services.AddDbContext<RecipeCatalogDBContext>(o =>
-                o.UseSqlServer(config.GetConnectionString("Database"))
+                o.UseNpgsql(connectionString)
             );
 
             services.AddScoped<RecipeCatalogDBContext>();

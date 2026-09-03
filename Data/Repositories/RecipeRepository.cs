@@ -43,8 +43,8 @@ namespace Infrastructure.Repositories
 
             if (requiredIngredientIds != null && requiredIngredientIds.Length > 0)
             {
-                query = query.Where(r => r.Recipe_Ingredients
-                    .Count(ri => requiredIngredientIds.Contains(ri.IngredientId)) == requiredIngredientIds.Length);
+                query = query.Where(r => requiredIngredientIds
+                    .All(id => r.Recipe_Ingredients.Any(ri => ri.IngredientId == id)));
             }
 
             if (optionalIngredientIds != null && optionalIngredientIds.Length > 0)

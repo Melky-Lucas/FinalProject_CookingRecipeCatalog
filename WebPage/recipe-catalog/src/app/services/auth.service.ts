@@ -20,13 +20,17 @@ export class AuthService {
 
   login(credentials: LoginRequest) {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/Auth/login`, credentials).pipe(
-      tap(response => this.persistSession(response))
+      tap({
+        next: (response) => this.persistSession(response)
+      })
     );
   }
 
   register(data: RegisterRequest) {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/Auth/register`, data).pipe(
-      tap(response => this.persistSession(response))
+      tap({
+        next: (response) => this.persistSession(response)
+      })
     );
   }
 

@@ -45,6 +45,7 @@ interface StepFormValue {
 export class RecipeFormComponent implements OnInit {
   categories: RecipeCategoryDto[] = [];
   ingredients: IngredientDto[] = [];
+  selectedIngredientIds: Record<number, number> = {};
   measureUnits: MeasureUnitDto[] = [];
 
   loading = true;
@@ -127,19 +128,40 @@ export class RecipeFormComponent implements OnInit {
   }
 
   addIngredientRow(data?: IngredientFormValue): void {
+    if (this.isIngredientLimitReached()) {
+      return;
+    }
+
+    let nextIngredientId: number;
+
+    if (data?.ingredientId) {
+      nextIngredientId = data.ingredientId;
+    } else {
+      nextIngredientId = this.ingredients.find(ingredient =>
+        !Object.values(this.selectedIngredientIds).includes(ingredient.id)
+      )?.id ?? 0;
+    }
+
     this.ingredientsArray.push(
       this.fb.group({
         id: [data?.id ?? null],
-        ingredientId: [data?.ingredientId ?? (this.ingredients[0]?.id ?? 0), Validators.required],
+        ingredientId: [nextIngredientId, Validators.required],
         quantity: [data?.quantity ?? 1, [Validators.required, Validators.min(1)]],
         unitId: [data?.unitId ?? (this.measureUnits[0]?.id ?? 0), Validators.required],
         isOptional: [data?.isOptional ?? false]
       })
     );
+
+    const index = this.ingredientsArray.length - 1;
+
+    this.selectedIngredientIds[index] = data?.ingredientId ?
+      data.ingredientId :
+      nextIngredientId;
   }
 
   removeIngredientRow(index: number): void {
     this.ingredientsArray.removeAt(index);
+    delete this.selectedIngredientIds[index];
   }
 
   addStepRow(data?: StepFormValue): void {
@@ -473,5 +495,18 @@ export class RecipeFormComponent implements OnInit {
 
   isCategorySelected(categoryId: number): boolean {
     return ((this.form.value.categoryIds ?? []) as number[]).includes(categoryId);
+  }
+
+  onIngredientSelect(index: number, event: Event): void {
+    const selectedId = this.ingredientsArray.at(index)?.get('ingredientId')?.value;
+    this.selectedIngredientIds[index] = selectedId;
+  }
+
+  isIngredientSelected(ingredientId: number): boolean {
+    return Object.values(this.selectedIngredientIds).includes(ingredientId);
+  }
+
+  isIngredientLimitReached(): boolean {
+    return this.ingredients.length === Object.keys(this.selectedIngredientIds).length;
   }
 }
