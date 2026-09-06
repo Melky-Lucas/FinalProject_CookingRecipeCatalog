@@ -1,4 +1,3 @@
-﻿using Application.Contract;
 using Application.DTOs;
 using Application.DTOs.Validators;
 using AutoMapper;

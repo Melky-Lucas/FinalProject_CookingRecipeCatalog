@@ -84,6 +84,17 @@ builder.Services.AddCors(options =>
         builder.WithOrigins("http://localhost:4200")
                .AllowAnyMethod()
                .AllowAnyHeader();
+
+        builder.WithOrigins("http://localhost:3000")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+
+    options.AddPolicy("AllowWeb", builder =>
+    {
+        builder.WithOrigins("https://superlative-kitten-e5bb53.netlify.app")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
     });
 });
 
@@ -95,19 +106,23 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 
-app.UseCors("AllowAngular");
+app.UseRouting();
+
+app.UseCors("AllowWeb");
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    using var scope = app.Services.CreateScope();
-    var services = scope.ServiceProvider;
-    DataSeeder.InitializeDB(services);
-
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "API v1");
     }); 
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    DataSeeder.InitializeDB(services);
 }
 
 app.UseHttpsRedirection();
