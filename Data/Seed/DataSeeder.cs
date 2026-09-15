@@ -11,7 +11,27 @@ namespace Infrastructure.Seed
         {
             var context = serviceProvider.GetRequiredService<RecipeCatalogDBContext>();
 
-            context.Database.EnsureCreated();
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            switch (env)
+            {
+                case "Development":
+                    context.Database.EnsureDeleted();
+                    context.Database.Migrate();
+                    break;
+
+                case "Production":
+                    context.Database.Migrate();
+                    break;
+
+                case "Testing":
+                    context.Database.EnsureCreated();
+                    break;
+
+                default: 
+                    throw new InvalidOperationException("No enviroment provided for database");
+
+            }
 
             if (context.Roles.Any())
             {
