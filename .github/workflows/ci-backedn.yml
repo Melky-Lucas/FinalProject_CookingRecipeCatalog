@@ -12,7 +12,7 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-        services:
+    services:
       postgres:
         image: postgres:16
         env:
@@ -21,7 +21,6 @@ jobs:
           POSTGRES_DB: recipecatalog
         ports:
           - 5432:5432
-        # Wait to Postgres is ready before start the steps
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -44,6 +43,6 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Ejecutar Pruebas
-    env:
-        ConnectionStrings__DefaultConnection: ${{ secrets.DATABASE_URL }}
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: dotnet test --no-build --configuration Release --verbosity normal
