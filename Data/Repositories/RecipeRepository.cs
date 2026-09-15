@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories
             int[]? requiredIngredientIds,
             int[]? optionalIngredientIds,
             int[]? excludedIngredientIds,
-            int pageSize = 10,
+            int pageSize = 12,
             int pageNumber = 1)
         {
             IQueryable<Recipe> query = _table;
