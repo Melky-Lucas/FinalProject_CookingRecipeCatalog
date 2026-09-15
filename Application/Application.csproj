@@ -12,7 +12,11 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
+<<<<<<< HEAD
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
+=======
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
+>>>>>>> a36128de87f15375dd7813da847dbd6258f457fd
   </ItemGroup>
 
 </Project>

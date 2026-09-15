@@ -3,8 +3,13 @@ using Application.DTOs.Validators;
 using Application.Interfaces;
 using Application.Services;
 using Core.Interfaces;
+<<<<<<< HEAD
 using FluentValidation;
 using Core.Interfaces.Repositories;
+=======
+using Core.Interfaces.Repositories;
+using FluentValidation;
+>>>>>>> a36128de87f15375dd7813da847dbd6258f457fd
 using Infrastructure.Auth;
 using Infrastructure.Context;
 using Infrastructure.Mapping;
@@ -52,7 +57,11 @@ namespace WebAPI.Extensions
 
                 int port = databaseUri.Port == -1 ? 5432 : databaseUri.Port;
 
+<<<<<<< HEAD
                 connectionString = $"Host={databaseUri.Host};Port={port};Database={databaseUri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Prefer;Trust Server Certificate=True";
+=======
+                connectionString = $"Host={databaseUri.Host};Port={port};Database={databaseUri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=True";
+>>>>>>> a36128de87f15375dd7813da847dbd6258f457fd
             }
 
             // DBContext

@@ -6,9 +6,12 @@
 #My Files
 Data/DB
 README.Docker.md
+<<<<<<< HEAD
 compose.yaml
 WebAPI\appsettings.json
 WebAPI\appsettings.Development.json
+=======
+>>>>>>> a36128de87f15375dd7813da847dbd6258f457fd
 
 # User-specific files
 *.rsuser
