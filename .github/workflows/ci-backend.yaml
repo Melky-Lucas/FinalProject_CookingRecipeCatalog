@@ -48,4 +48,5 @@ jobs:
     - name: Ejecutar Pruebas
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        ASPNETCORE_ENVIRONMENT: Testing
       run: dotnet test --no-build --configuration Release --verbosity normal
