@@ -52,6 +52,7 @@ services:
       - .:/src
     working_dir: /src
     environment:
+      - ASPNETCORE_ENVIRONMENT=Testing
       - DATABASE_URL=postgresql://postgres:rt1234567l@postgres_db:5432/recipecatalog
     depends_on:
       postgres_db:

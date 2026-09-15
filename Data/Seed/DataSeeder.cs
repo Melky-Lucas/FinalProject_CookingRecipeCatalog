@@ -11,8 +11,23 @@ namespace Infrastructure.Seed
         {
             var context = serviceProvider.GetRequiredService<RecipeCatalogDBContext>();
 
-            if (context.Database.EnsureCreated())
-                context.Database.Migrate();
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            switch (env)
+            {
+                case "Development":
+                    context.Database.EnsureDeleted();
+                    context.Database.Migrate();
+                    break;
+
+                case "Production":
+                    context.Database.Migrate();
+                    break;
+
+                case "Testing":
+                    context.Database.EnsureCreated();
+                    break;
+            }
 
             if (context.Roles.Any())
             {
