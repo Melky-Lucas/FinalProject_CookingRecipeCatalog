@@ -6,6 +6,9 @@
 #My Files
 Data/DB
 README.Docker.md
+compose.yaml
+WebAPI\appsettings.json
+WebAPI\appsettings.Development.json
 
 # User-specific files
 *.rsuser
